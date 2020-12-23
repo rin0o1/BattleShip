@@ -61,6 +61,7 @@ public class StartView implements Screen {
                                  int pointer,
                                  int button)
             {
+                //call cGameView
                 //  game.setScreen(new OptionScreen(game));
             }
         });
