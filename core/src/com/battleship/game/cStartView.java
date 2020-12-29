@@ -10,25 +10,27 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class StartView implements Screen {
+public class cStartView implements Screen {
 
     private Stage stage;
     private Game game;
 
-    public StartView(Game agame){
+    public cStartView(Game agame){
         game = agame;
         stage = new Stage(new ScreenViewport());
-        Label title = new Label("BATTLESHIP", BattleShip.gameSkin);
+        Label title = new Label("BATTLESHIP", cBattleShip.gameSkin);
         title.setAlignment(Align.center);
         title.setY(Gdx.graphics.getHeight()*2/3);
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
 
-        TextButton playButton = new TextButton("Single player",BattleShip.gameSkin);
+        TextButton playButton = new TextButton("Single player",
+                                                cBattleShip.gameSkin);
+
         playButton.setWidth(Gdx.graphics.getWidth()/2);
+
         playButton.setPosition(
                 Gdx.graphics.getWidth()/2-playButton.getWidth()/2,
                 Gdx.graphics.getHeight()/2-playButton.getHeight()/2);
@@ -41,18 +43,32 @@ public class StartView implements Screen {
                                  int pointer,
                                  int button)
             {
-                //   game.setScreen(new GameScreen(game));
+                   game.setScreen(new cGameView(game));
+            }
+            @Override
+            public boolean touchDown (InputEvent event,
+                                      float x,
+                                      float y,
+                                      int pointer,
+                                      int button)
+            {
+                return true;
             }
 
         });
         stage.addActor(playButton);
 
 
-        TextButton optionsButton = new TextButton("Settings",BattleShip.gameSkin);
+        TextButton optionsButton = new TextButton(
+                "Settings",
+                cBattleShip.gameSkin);
+
         optionsButton.setWidth(Gdx.graphics.getWidth()/2);
+
         optionsButton.setPosition(
                 Gdx.graphics.getWidth()/2-optionsButton.getWidth()/2,
                 Gdx.graphics.getHeight()/4-optionsButton.getHeight()/2);
+
         optionsButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event,

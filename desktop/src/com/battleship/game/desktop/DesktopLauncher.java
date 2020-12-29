@@ -2,11 +2,11 @@ package com.battleship.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.battleship.game.BattleShip;
+import com.battleship.game.cBattleShip;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new BattleShip(), config);
+		new LwjglApplication(new cBattleShip(), config);
 	}
 }
