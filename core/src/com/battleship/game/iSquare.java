@@ -8,7 +8,9 @@ public interface iSquare {
 
      void removeCurrentObject();
 
-     cTableObject isBusy();
+     cTableObject isBusyAndObject();
+
+     boolean isBusy();
 
 
 }

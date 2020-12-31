@@ -1,11 +1,13 @@
 package com.battleship.game;
 
+import java.util.ArrayList;
+
 public interface iShip {
 
      void dropShipOnTable(
             float [] coordinates,
-            int Orientation,
-            int [] squareId,
+            objectOrientation Orientation,
+            ArrayList<cSquare> mySquare,
             float height);
 
      void shipSunk();

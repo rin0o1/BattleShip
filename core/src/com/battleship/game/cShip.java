@@ -4,13 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+import java.util.ArrayList;
+
 public class cShip extends cTableObject implements  iShip{
 
     private int length;
-    private int orientation;
+    private objectOrientation orientation;
     private boolean isSunk;
-    private int [] squareIds;
-    private int[] squareIdsNoHit;
+    private ArrayList<cSquare> mySquare;
+    private ArrayList<cSquare> squareNoHit;
 
     public cShip(
             Texture texture,
@@ -19,7 +21,7 @@ public class cShip extends cTableObject implements  iShip{
     )
     {
         this.texture=texture;
-        this.name=name;
+        this.setName(name);
         this.length=length;
 
         image=null;
@@ -38,14 +40,17 @@ public class cShip extends cTableObject implements  iShip{
     @Override
     public void dropShipOnTable(
             float[] coordinates,
-            int Orientation,
-            int [] squareId,
-            float height)
+            objectOrientation Orientation,
+            ArrayList<cSquare> mySquare,
+            float squareHeight)
     {
 
         image= new Image(texture);
+        image.setRotation(getRotationDegreeFromOrientation(
+                Orientation)
+        );
         image.setPosition(coordinates[0], coordinates[1]);
-        image.setHeight(height);
+        image.setHeight(squareHeight);
 
     }
 
@@ -64,4 +69,6 @@ public class cShip extends cTableObject implements  iShip{
     public boolean isSunk() {
         return false;
     }
+
+    public int getLength(){return  this.length;}
 }

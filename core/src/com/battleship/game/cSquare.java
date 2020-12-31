@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class cSquare extends cTableObject implements iSquare {
 
     private Texture textureOnHover;
-
     private cTableObject object;
 
     public cSquare(
@@ -23,7 +22,7 @@ public class cSquare extends cTableObject implements iSquare {
         this.object=null;
         this.width=width;
         this.height=height;
-        this.name=name;
+        this.setName(name);
         this.coordinates=coordinates;
 
         setTouchable(Touchable.enabled);
@@ -36,8 +35,10 @@ public class cSquare extends cTableObject implements iSquare {
         image.setSize(width, height);
         image.setTouchable(Touchable.enabled);
 
+
     }
 
+    public float[] getCoordinates(){return  coordinates;}
 
 
     @Override
@@ -58,7 +59,7 @@ public class cSquare extends cTableObject implements iSquare {
 
     @Override
     public void placeObject(cTableObject object) {
-
+        this.object=object;
     }
 
     @Override
@@ -67,15 +68,14 @@ public class cSquare extends cTableObject implements iSquare {
     }
 
     @Override
-    public cTableObject isBusy() {
-        return null;
+    public cTableObject isBusyAndObject() {
+        return object;
     }
 
-
-    public  cTableObject getIsBusy(){
-        return this.object;
+    @Override
+    public boolean isBusy() {
+        return object!=null;
     }
-
 
 
 }

@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class cTableObject extends Actor {
 
     protected float[] coordinates;
-    protected String name;
     protected float width;
     protected float height;
     protected Texture texture;
@@ -18,6 +17,16 @@ public class cTableObject extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+    }
+
+    public float getRotationDegreeFromOrientation(
+            objectOrientation orientation
+    ){
+        switch (orientation){
+            case VERTICAL:return 0;
+            case HORIZONTAL: return 270;
+        }
+        return 0;
     }
 
 }
