@@ -10,6 +10,7 @@ public class cBattleShip extends Game {
 	public void create () {
 		String path= "C:\\Users\\Admin\\OneDrive - Brunel University London\\Desktop\\Tests\\skin\\comic-ui.json";
 		gameSkin = new Skin(Gdx.files.internal(path));
+
 	//	this.setScreen(new cStartView(this));
 		this.setScreen(new cGameView(this));
 	}

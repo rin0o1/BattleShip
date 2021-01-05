@@ -3,8 +3,10 @@ package com.battleship.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 public class cSquare extends cTableObject implements iSquare {
@@ -12,39 +14,49 @@ public class cSquare extends cTableObject implements iSquare {
     private Texture textureOnHover;
     private cTableObject object;
 
+    private Stage stage;
+
     public cSquare(
                 float width,
                 float height,
                 float [] coordinates,
-                String name
+                String name,
+                Stage stage
                 )
     {
         this.object=null;
         this.width=width;
         this.height=height;
+        this.stage=stage;
+
         this.setName(name);
         this.coordinates=coordinates;
 
-        setTouchable(Touchable.enabled);
+        textureOnHover = new Texture(Gdx.files.internal("squareOver.png"));
+        texture = new Texture(Gdx.files.internal("squareTexture.gif"));
 
-        textureOnHover = new Texture(Gdx.files.internal("squareOver.PNG"));
-        texture = new Texture(Gdx.files.internal("oceanNew.gif"));
+        body =  new Image(texture);
 
-        image =  new Image(textureOnHover);
-        image.setPosition(coordinates[0], coordinates[1]);
-        image.setSize(width, height);
-        image.setTouchable(Touchable.enabled);
+        body.setPosition(coordinates[0], coordinates[1]);
+        body.setSize(width, height);
+        body.setTouchable(Touchable.enabled);
+        stage.addActor(body);
+    }
 
+    public void squareTouchUp(){
+        body.setDrawable(new TextureRegionDrawable(texture));
+    }
 
+    public void squareTouchDown(){
+        body.setDrawable(new TextureRegionDrawable(textureOnHover));
     }
 
     public float[] getCoordinates(){return  coordinates;}
 
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        image.draw(batch, parentAlpha);
+        body.draw(batch, parentAlpha);
     }
 
     @Override
@@ -76,6 +88,7 @@ public class cSquare extends cTableObject implements iSquare {
     public boolean isBusy() {
         return object!=null;
     }
+
 
 
 }

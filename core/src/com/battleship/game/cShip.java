@@ -24,16 +24,22 @@ public class cShip extends cTableObject implements  iShip{
         this.setName(name);
         this.length=length;
 
-        image=null;
+        body =null;
 
+    }
+
+    @Override
+    public void act(float delta)
+    {
+        super.act(delta);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        if(image!=null){
-            image.draw(batch, parentAlpha);
+        if(body !=null){
+            body.draw(batch, parentAlpha);
         }
     }
 
@@ -45,13 +51,13 @@ public class cShip extends cTableObject implements  iShip{
             float squareHeight)
     {
 
-        image= new Image(texture);
-        image.setRotation(getRotationDegreeFromOrientation(
+        body = new Image(texture);
+
+        body.setRotation(getRotationDegreeFromOrientation(
                 Orientation)
         );
-        image.setPosition(coordinates[0], coordinates[1]);
-        image.setHeight(squareHeight);
-
+        body.setPosition(coordinates[0], coordinates[1]);
+        body.setHeight(squareHeight);
     }
 
     @Override

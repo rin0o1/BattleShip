@@ -11,12 +11,16 @@ public class cTableObject extends Actor {
     protected float width;
     protected float height;
     protected Texture texture;
-    protected Image image;
+    protected Image body;
 
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+    }
+
+    public Image getBody(){
+        return body;
     }
 
     public float getRotationDegreeFromOrientation(

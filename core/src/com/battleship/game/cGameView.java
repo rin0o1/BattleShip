@@ -3,42 +3,40 @@ package com.battleship.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import java.util.LinkedList;
-import java.util.ListIterator;
 
 public class cGameView implements Screen {
 
     private Stage stage;
     private Game game;
-    private cTableSection tableSection;
 
+    private cTableSection tableSection;
+    private cRightSection rightSection;
+    private cLeftSection leftSection;
 
     private SpriteBatch batch;
 
     public cGameView(Game game){
+
         batch= new SpriteBatch();
 
         tableSection= new cTableSection();
-        tableSection.initSection();
 
         stage = new Stage( new ScreenViewport());
         stage.addActor(tableSection);
+
+        tableSection.initSection(stage);
+
         this.game = game;
     }
-
-
 
     @Override
     public void show() {
@@ -63,8 +61,9 @@ public class cGameView implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-
+    public void resize(int width, int height)
+    {
+        stage.getViewport().update(width, height);
     }
 
     @Override

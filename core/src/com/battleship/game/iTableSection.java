@@ -2,10 +2,11 @@ package com.battleship.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public interface iTableSection {
 
-    void initSection();
+    void initSection(Stage stage);
 
     void renderSection(SpriteBatch batch, float deltaTime);
 
