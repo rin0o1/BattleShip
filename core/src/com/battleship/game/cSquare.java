@@ -14,23 +14,23 @@ public class cSquare extends cTableObject implements iSquare {
     private Texture textureOnHover;
     private cTableObject object;
 
-    private Stage stage;
 
     public cSquare(
                 float width,
                 float height,
                 float [] coordinates,
-                String name,
-                Stage stage
+                String name
+
                 )
     {
         this.object=null;
         this.width=width;
         this.height=height;
-        this.stage=stage;
+
 
         this.setName(name);
         this.coordinates=coordinates;
+        setTouchable(Touchable.enabled);
 
         textureOnHover = new Texture(Gdx.files.internal("squareOver.png"));
         texture = new Texture(Gdx.files.internal("squareTexture.gif"));
@@ -40,7 +40,6 @@ public class cSquare extends cTableObject implements iSquare {
         body.setPosition(coordinates[0], coordinates[1]);
         body.setSize(width, height);
         body.setTouchable(Touchable.enabled);
-        stage.addActor(body);
     }
 
     public void squareTouchUp(){

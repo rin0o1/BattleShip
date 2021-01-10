@@ -17,6 +17,7 @@ public class cTableObject extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
     }
 
     public Image getBody(){
@@ -32,5 +33,6 @@ public class cTableObject extends Actor {
         }
         return 0;
     }
+
 
 }

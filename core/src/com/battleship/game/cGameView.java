@@ -24,7 +24,9 @@ public class cGameView implements Screen {
 
     private SpriteBatch batch;
 
+
     public cGameView(Game game){
+
 
         batch= new SpriteBatch();
 
@@ -35,7 +37,17 @@ public class cGameView implements Screen {
 
         tableSection.initSection(stage);
 
+        leftSection= new cLeftSection(stage);
+        stage.addActor(leftSection);
+        float tableSectionWidth=tableSection.getWidth();
+        float positionX= tableSection.getX();
+
+        rightSection= new cRightSection(stage,
+                (50*10)+leftSection.getWidth()+110);
+        stage.addActor(rightSection);
         this.game = game;
+
+
     }
 
     @Override

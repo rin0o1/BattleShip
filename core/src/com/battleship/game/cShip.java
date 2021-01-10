@@ -76,5 +76,6 @@ public class cShip extends cTableObject implements  iShip{
         return false;
     }
 
+
     public int getLength(){return  this.length;}
 }
