@@ -1,9 +1,14 @@
 package com.battleship.game;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import java.io.File;
 import java.util.ArrayList;
 
 public class cHelper {
+
+    private ArrayList<Texture> textures;
+
 
     public static ArrayList<String> getFilesFromFolderPath(
             String folderPath
@@ -18,5 +23,7 @@ public class cHelper {
         }
         return fileNames;
     }
+
+
 
 }

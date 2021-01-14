@@ -15,7 +15,6 @@ public class cBattleShip extends Game {
 	//	this.setScreen(new cStartView(this));
 		this.setScreen(new cGameView(this));
 	}
-
 	public void render () {
 		super.render();
 	}

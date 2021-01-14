@@ -34,12 +34,20 @@ class Explosion {
         explosionTimer = 0;
     }
 
-    public void update(float deltaTime) {
-        explosionTimer += deltaTime;
+    public void update(float deltaTime)
+    {
+        if(explosionTimer>1.5){
+            explosionTimer=0;
+        }
+        else    {
+            explosionTimer+=deltaTime;
+        }
+
 
     }
 
-    public void draw (SpriteBatch batch) {
+    public void draw (SpriteBatch batch)
+    {
         batch.draw(explosionAnimation.getKeyFrame(explosionTimer),
                 boundingBox.x,
                 boundingBox.y,

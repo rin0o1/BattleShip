@@ -3,59 +3,69 @@ package com.battleship.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 public class cSquare extends cTableObject implements iSquare {
 
     private Texture textureOnHover;
     private cTableObject object;
-
+    private boolean isAvailableForAction;
+    private int [] tableCoordinates;
 
     public cSquare(
                 float width,
                 float height,
-                float [] coordinates,
+                float [] position,
+                int [] tableCoordinates,
                 String name
-
                 )
     {
+
+        super();
+
         this.object=null;
+        this.isAvailableForAction =true;
+
         this.width=width;
         this.height=height;
 
-
+        this.tableCoordinates=tableCoordinates;
         this.setName(name);
-        this.coordinates=coordinates;
-        setTouchable(Touchable.enabled);
+        this.position =position;
+
 
         textureOnHover = new Texture(Gdx.files.internal("squareOver.png"));
-        texture = new Texture(Gdx.files.internal("squareTexture.gif"));
+        Texture baseTexture = new Texture(Gdx.files.internal("squareTexture.gif"));
+        setTextureFromTexture(baseTexture);
 
-        body =  new Image(texture);
-
-        body.setPosition(coordinates[0], coordinates[1]);
+        body.setPosition(position[0], position[1]);
         body.setSize(width, height);
-        body.setTouchable(Touchable.enabled);
+
     }
 
-    public void squareTouchUp(){
-        body.setDrawable(new TextureRegionDrawable(texture));
+    public void squareTouchUp()
+    {
+        setTextureFromTexture(texture);
     }
 
-    public void squareTouchDown(){
-        body.setDrawable(new TextureRegionDrawable(textureOnHover));
+    public void squareTouchDown()
+    {
+        setTextureFromTexture(textureOnHover, true);
     }
 
-    public float[] getCoordinates(){return  coordinates;}
+    public  int[] getCoordinates(){return tableCoordinates;}
+
+    public boolean getIsAvailableForAction(){return this.isAvailableForAction;}
+
+    public  void setIsAvailableForAction(boolean isAvailableForAction)
+    {
+        this.isAvailableForAction =isAvailableForAction;
+    }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        body.draw(batch, parentAlpha);
     }
 
     @Override
@@ -78,6 +88,16 @@ public class cSquare extends cTableObject implements iSquare {
 
     }
 
+    public void setTextureForShot(){
+        Texture t= new Texture(Gdx.files.internal("shotHit.PNG"));
+        setTextureFromTexture(t);
+    }
+
+    public void setTextureForMissed(){
+        Texture t = new Texture(Gdx.files.internal("shotMissed.PNG"));
+        setTextureFromTexture(t);
+    }
+
     @Override
     public cTableObject isBusyAndObject() {
         return object;
@@ -86,6 +106,11 @@ public class cSquare extends cTableObject implements iSquare {
     @Override
     public boolean isBusy() {
         return object!=null;
+    }
+
+    public  boolean cointainsAShip()
+    {
+        return  object instanceof cShip;
     }
 
 

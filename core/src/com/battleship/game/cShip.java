@@ -3,29 +3,36 @@ package com.battleship.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 
 import java.util.ArrayList;
 
-public class cShip extends cTableObject implements  iShip{
+public class cShip extends cTableObject {
 
     private int length;
+    private int shotReceived;
     private objectOrientation orientation;
     private boolean isSunk;
+
     private ArrayList<cSquare> mySquare;
-    private ArrayList<cSquare> squareNoHit;
+
 
     public cShip(
-            Texture texture,
             String name,
             int length
     )
     {
-        this.texture=texture;
+        super();
         this.setName(name);
         this.length=length;
+        this.shotReceived=0;
 
-        body =null;
+    }
 
+    public boolean updateAndCheckState(){
+        shotReceived++;
+        this.isSunk= shotReceived==length;
+        return  isSunk;
     }
 
     @Override
@@ -34,48 +41,33 @@ public class cShip extends cTableObject implements  iShip{
         super.act(delta);
     }
 
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-
-        if(body !=null){
-            body.draw(batch, parentAlpha);
-        }
     }
 
-    @Override
+    public boolean isSunk(){return  isSunk;}
+
     public void dropShipOnTable(
+            Texture texture_,
             float[] coordinates,
-            objectOrientation Orientation,
-            ArrayList<cSquare> mySquare,
-            float squareHeight)
+            objectOrientation orientation,
+            float squareHeight,
+            ArrayList<cSquare> squares
+            )
     {
-
-        body = new Image(texture);
-
+        this.orientation= orientation;
+        this.mySquare=squares;
+        body= new Image(texture_);
         body.setRotation(getRotationDegreeFromOrientation(
-                Orientation)
+                orientation)
         );
         body.setPosition(coordinates[0], coordinates[1]);
         body.setHeight(squareHeight);
-    }
-
-    @Override
-    public void shipSunk() {
 
     }
-
-    @Override
-    public void shipHit(float[] coordinates) {
-
-    }
-
-
-    @Override
-    public boolean isSunk() {
-        return false;
-    }
-
+    public  ArrayList<cSquare> getMySquare(){return  this.mySquare;}
 
     public int getLength(){return  this.length;}
 }

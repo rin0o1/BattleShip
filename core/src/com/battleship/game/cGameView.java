@@ -30,7 +30,7 @@ public class cGameView implements Screen {
 
         batch= new SpriteBatch();
 
-        tableSection= new cTableSection();
+        tableSection= new cTableSection(this);
 
         stage = new Stage( new ScreenViewport());
         stage.addActor(tableSection);
