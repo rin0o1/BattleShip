@@ -38,6 +38,7 @@ class Explosion {
     {
         if(explosionTimer>1.5){
             explosionTimer=0;
+
         }
         else    {
             explosionTimer+=deltaTime;

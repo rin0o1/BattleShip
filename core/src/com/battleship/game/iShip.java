@@ -10,9 +10,9 @@ public interface iShip {
             ArrayList<cSquare> mySquare,
             float height);
 
-     void shipSunk();
+     void shipsank();
 
      void shipHit(float [] coordinates);
 
-     boolean isSunk();
+     boolean issank();
 }

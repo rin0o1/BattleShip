@@ -12,7 +12,7 @@ public class cShip extends cTableObject {
     private int length;
     private int shotReceived;
     private objectOrientation orientation;
-    private boolean isSunk;
+    private boolean issank;
 
     private ArrayList<cSquare> mySquare;
 
@@ -31,8 +31,8 @@ public class cShip extends cTableObject {
 
     public boolean updateAndCheckState(){
         shotReceived++;
-        this.isSunk= shotReceived==length;
-        return  isSunk;
+        this.issank= shotReceived==length;
+        return  issank;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class cShip extends cTableObject {
         super.draw(batch, parentAlpha);
     }
 
-    public boolean isSunk(){return  isSunk;}
+    public boolean issank(){return  issank;}
 
     public void dropShipOnTable(
             Texture texture_,

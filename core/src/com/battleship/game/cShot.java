@@ -44,11 +44,12 @@ public class cShot extends cWeapon
         {
             s=(cShip) squareLocation.isBusyAndObject();
 
-            boolean isSunk= s.updateAndCheckState();
+            boolean issank= s.updateAndCheckState();
 
-            if(isSunk)
+            if(issank)
             {
-                outcomeOfShot="My ship is sunk";
+                squareLocation.setTextureForShot();
+                outcomeOfShot="My ship is sank";
                 idOutcome=0;
             }
             else {

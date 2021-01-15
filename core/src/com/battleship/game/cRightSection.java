@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class cRightSection extends Actor
 {
-    private ArrayList<cShip> sunkShips;
-    private ArrayList<cShip> unSunkShips;
+    private ArrayList<cShip> sankShips;
+    private ArrayList<cShip> unsankShips;
 
-    private TextButton sunkWritten;
-    private TextButton unkSunkWritten;
+    private TextButton sankWritten;
+    private TextButton unksankWritten;
 
     private Stage stage;
     private float startX;
@@ -23,15 +23,15 @@ public class cRightSection extends Actor
     {
         this.startX=startX;
         this.stage=stage;
-        sunkShips= new ArrayList<>();
-        unSunkShips=new ArrayList<>();
+        sankShips= new ArrayList<>();
+        unsankShips=new ArrayList<>();
 
         float screenHeight= Gdx.graphics.getHeight();
-        sunkWritten = new TextButton("SUNK",
+        sankWritten = new TextButton("sank",
                 cBattleShip.gameSkin);
 
-        sunkWritten.setBounds(startX,screenHeight-50,0,0);
-        stage.addActor(sunkWritten);
+        sankWritten.setBounds(startX,screenHeight-50,0,0);
+        stage.addActor(sankWritten);
     }
 
     public void addShips(int list, cShip s)
