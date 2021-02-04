@@ -29,6 +29,7 @@ public class cTableSection extends Table implements iTableSection {
         private final int rowsNum;
         private int radarCount;
 
+        //test
         private Label messageBox;
 
         private cWeapon weaponSelected;
