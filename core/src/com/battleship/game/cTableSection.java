@@ -20,28 +20,22 @@ public class cTableSection extends Table implements iTableSection {
         private LinkedList<Explosion> explosionList;
         private Texture explosionTexture;
 
-        private SpriteBatch batch;
-        private float deltaTime;
-
+        //get those values from a setting file
         private final float squareHeight;
         private final float squareWidth;
         private final int columsNum;
         private final int rowsNum;
         private int radarCount;
 
-        //test
-        private Label messageBox;
-
         private cWeapon weaponSelected;
         private Image weaponIconSelected;
+        private ArrayList<cWeapon> weapons;
+        private cWeaponHandler weaponHandler;
 
         private final ArrayList<cTableObject> tableObjects;
 
         private final String shipsTexturesPath;
-        private int countOfShot;
         private final Random random;
-
-        private ArrayList<cWeapon> weapons;
 
         private Stage stage;
         private cGameView gameView;
@@ -63,16 +57,34 @@ public class cTableSection extends Table implements iTableSection {
             weapons= new ArrayList<>();
             weaponSelected=null;
 
+            weaponHandler= new cWeaponHandler(this);
+
             this.gameView=gameView;
 
             explosionTexture = new Texture("explosion.png");
             explosionList= new LinkedList<>();
         }
 
+        public void updateShipList(cShip ship, boolean value){
+                gameView.updateShipList(ship, value);
+        }
+
+        public void addExplosion(float locX, float locY){
+                explosionList.add(new Explosion(
+                        explosionTexture,
+                        new Rectangle(
+                                locX,
+                                locY,
+                                squareWidth,
+                                squareHeight),
+                        2f));
+        }
+
         @Override
         public void initSection(Stage stage){
                 this.stage=stage;
                 initWeapon();
+                //weaponHandler.initWeapon();
                 buildTable();
                 displayShips();
 
@@ -87,22 +99,17 @@ public class cTableSection extends Table implements iTableSection {
 
         //this method is called as loop from cGameView class
         public void renderSection(SpriteBatch batch, float deltaTime){
-                this.batch=batch;
-                this.deltaTime =deltaTime;
-                updateAndRenderExplosions();
-             //   cShip ship= getShipsFromTableObjects().get(0);
-           //     ship.getBody().moveBy(ship.getX()+(1.5f), ship.getY());
-         //       ship.getBody().draw(batch, deltaTime);
-
-        }
-
-        private void updateAndRenderExplosions() {
                 ListIterator<Explosion> explosionListIterator = explosionList.listIterator();
+                //rendering explosions
                 while (explosionListIterator.hasNext()) {
                         Explosion explosion = explosionListIterator.next();
                         explosion.update(deltaTime);
                         explosion.draw(batch);
                 }
+             //   cShip ship= getShipsFromTableObjects().get(0);
+           //     ship.getBody().moveBy(ship.getX()+(1.5f), ship.getY());
+         //       ship.getBody().draw(batch, deltaTime);
+
         }
 
         @Override
@@ -128,6 +135,7 @@ public class cTableSection extends Table implements iTableSection {
                         0);
                 stage.addActor(weaponWritten);
 
+                //designin
                 for(int i=1; i<weapons.size()+1;i++)
                 {
                         final cWeapon object=weapons.get(i-1);
@@ -146,6 +154,7 @@ public class cTableSection extends Table implements iTableSection {
                                       /*  icon.setSize(
                                                 icon.getWidth()+20,
                                                 icon.getHeight()+20);*/
+                                        //weaponHandler.onWeaponSelected();
                                         onWeaponSelected(object,icon);
                                 }
 
@@ -174,11 +183,6 @@ public class cTableSection extends Table implements iTableSection {
                                         - (width*rowsNum)/2) + i*width;
 
                                 name=createSquareNameFromCoordinates(i,h);
-                                System.out.println("-------------------------");
-                                System.out.println(name);
-                                System.out.println("Y " + y);
-                                System.out.println("x " + x);
-                                System.out.println("-------------------------");
 
                                 final cSquare square=new cSquare
                                         (
@@ -222,7 +226,6 @@ public class cTableSection extends Table implements iTableSection {
                 }
         }
 
-
         private void onWeaponSelected(cWeapon weapon, Image icon) {
                 //if is available
                 weaponSelected =weapon;
@@ -237,107 +240,66 @@ public class cTableSection extends Table implements iTableSection {
 
         private boolean onSquareTouchDown(cSquare square) {
                 square.squareTouchDown();
+                weaponHandler(square);
+                return true;
+        }
 
-                if(weaponSelected==null){ System.out.println("Please choose a weapon"); return true;}
-
-                int [] coordinates= square.getCoordinates();
-                int square_X= coordinates[0];
-                int square_Y= coordinates[1];
+        private void weaponHandler(cSquare square){
+                if(weaponSelected==null){ System.out.println("Please choose a weapon"); return;}
 
                 boolean isShot= weaponSelected instanceof cShot
                         && square.getIsAvailableForAction();
-                if(isShot)
-                {
-                        cShot shot=new cShot(square);
-
-                        ArrayList<Object> res= shot.actionWithObject();
-                        gameEvent event=(gameEvent)res.get(0);
-
-                        double point=0;
-
-                        if (event==null){return true;}
-
-                        switch (event)
-                        {
-                                case SHIPHIT:
-                                        System.out.println("My ship hit");
-                                        point=1;
-                                        break;
-                                case SHIPSUNK:
-                                        cShip ship= (cShip) res.get(1);
-                                        int shipLength= ship.getLength();
-                                        point= shipLength*2;
-                                        System.out.println("Ship sunk");
-                                        stage.addActor(ship);
-                                        ArrayList<cSquare> squares=ship.getMySquare();
-                                        for (cSquare s: squares)
-                                        {
-                                                float[] sLocation=s.getPosition();
-                                                explosionList.add(new Explosion(
-                                                        explosionTexture,
-                                                        new Rectangle(
-                                                                sLocation[0],
-                                                                sLocation[1],
-                                                                squareWidth,
-                                                                squareHeight),
-                                                        2f));
-
-                                        }
-                                        gameView.updateShipList(ship,true);
-                                        break;
-                                case SHIPMISSED:
-                                        point=1;
-                                        System.out.println("Ship missed");
-                                        break;
-                        }
-
-                        gameView.updateScore(point, true);
-                        weaponSelected=null;
-
-                        return  true;
-                }
+                if(isShot) { shotFunction(square); }
 
                 boolean isRadarSelected= weaponSelected instanceof cRadar;
+                if(isRadarSelected) { placeRadarFunction(square);}
+        }
 
-                if(isRadarSelected)
+        private void placeRadarFunction(cSquare square) {
+                int [] coordinates= square.getCoordinates();
+                int square_X= coordinates[0];
+                int square_Y= coordinates[1];
+                if(!isRadarAvailable()){System.out.println("You used all radars available"); return ;}
+
+                boolean canBePlaced=
+                        square_X>0 &&
+                                square_X <columsNum-1 &&
+                                square_Y> 0 &&
+                                square_Y< rowsNum-1;
+
+                if(!canBePlaced){System.out.println("The radar cannot be placed here"); return ;}
+
+                cRadar r=new cRadar(square);
+                ArrayList<cSquare> squares=new ArrayList<>();
+                ArrayList<String> squareCoordinatesRequired;
+                squareCoordinatesRequired=r.getSquareCoordinatesRequired();
+
+                for (String sC: squareCoordinatesRequired)
                 {
-                        if(!isRadarAvailable()){System.out.println("You used all radars available"); return true;}
+                        String [] squareCoordinates=sC.split(",");
+                        int s_x=Integer.valueOf(squareCoordinates[0]);
+                        int s_y=Integer.valueOf(squareCoordinates[1]);
 
-                        boolean canBePlaced=
-                                                square_X>0 &&
-                                                square_X <columsNum-1 &&
-                                                square_Y> 0 &&
-                                                square_Y< rowsNum-1;
+                        String fromCoordinatesToName= createSquareNameFromCoordinates(
+                                s_x,
+                                s_y
+                        );
+                        cSquare singleSquareRequired= findActor(fromCoordinatesToName);
 
-                        if(!canBePlaced){System.out.println("The radar cannot be placed here"); return true;}
-
-                        cRadar r=new cRadar(square);
-                        ArrayList<cSquare> squares=new ArrayList<>();
-                        ArrayList<String> squareCoordinatesRequired;
-                        squareCoordinatesRequired=r.getSquareCoordinatesRequired();
-
-                        for (String sC: squareCoordinatesRequired)
-                        {
-                                String [] squareCoordinates=sC.split(",");
-                                int s_x=Integer.valueOf(squareCoordinates[0]);
-                                int s_y=Integer.valueOf(squareCoordinates[1]);
-
-                                String fromCoordinatesToName= createSquareNameFromCoordinates(
-                                        s_x,
-                                        s_y
-                                );
-                                cSquare singleSquareRequired= findActor(fromCoordinatesToName);
-
-                                squares.add(singleSquareRequired);
-                        }
-
-                        r.action(squares);
-                        radarCount-=1;
-                        System.out.println("Radar available "+ radarCount);
-                        weaponSelected=null;
-                        return true;
+                        squares.add(singleSquareRequired);
                 }
-                return true;
+
+                r.action(squares);
+                radarCount-=1;
+                System.out.println("Radar available "+ radarCount);
+                weaponSelected=null;
+                return;
+        }
+
+        private void shotFunction(cSquare square) {
+                int points= weaponHandler.shotFunction(square);
+                gameView.updateScore(points, true);
+                weaponSelected=null;
         }
 
         private boolean isRadarAvailable()
@@ -352,104 +314,38 @@ public class cTableSection extends Table implements iTableSection {
                 ArrayList<String> names= cHelper.getFilesFromFolderPath(
                         shipsTexturesPath
                 );
-
-                //getting textures from ships folder
-
                 Collections.reverse(names);
-
                 for (String shipTexurePath: names)
                 {
 
                         File f= new File(shipTexurePath);
                         String fileName=f.getName();
                         String [] splitName= fileName.split("_");
-
                         //getting ship inf
                         String shipName= splitName[0];
                         int shipLength=Integer.valueOf(splitName[1]);
-
-                        Texture texture= new Texture(
-                                new FileHandle(f)
-                        );
-
+                        Texture texture= new Texture(new FileHandle(f));
                         Image imgIcon=new Image(texture);
-                        cShip ship= new cShip(
-                                shipName,
-                                shipLength,
-                                imgIcon
-                                                );
+
+                        cShip ship= new cShip(shipName, shipLength,imgIcon);
 
                         boolean isDropped=false;
-                        int count=0;
 
                         //while the ship is not placed on the table
                         while(!isDropped)
                         {
-                                count++;
-                                System.out.println("---------------------------------------------------");
-                                System.out.println("COUNT "+ count);
-
-                                int [] startCoordinates= new int[2];
-                                int [] endCoordinates= new int[2];
-
-
-                                int start_x=-1;
-                                int start_y=-1;
-                                int end_x=-1;
-                                int end_y=-1;
-                                int orientationNum=random.nextInt(2);
-
-
-                                objectOrientation orientation= (orientationNum<=0) ?
+                                int [] res= getPositionAndOrientationFromShipLength(shipLength);
+                                objectOrientation orientation= (res[4]<=0) ?
                                         objectOrientation.HORIZONTAL:
                                         objectOrientation.VERTICAL;
 
-
-                                int shipLengthForTable=shipLength-1;
-
-                                if(orientation==objectOrientation.HORIZONTAL){
-                                        int rangeFor_x= (columsNum-1)-shipLengthForTable;
-                                        int rangeFor_y= rowsNum-1 ;
-                                        start_x=random.nextInt(rangeFor_x);
-                                        start_y=random.nextInt(rangeFor_y)+1;
-                                        end_x=start_x+shipLengthForTable;
-                                        end_y=start_y;
-
-                                        System.out.println("START X "+ start_x);
-                                        System.out.println("START Y "+ start_y);
-                                        System.out.println("LENGTH" + shipLength);
-                                        System.out.println("---------------------------------------------------");
-                                }
-
-                                else if(orientation==objectOrientation.VERTICAL)
-                                {
-                                        int rangeFor_y= (rowsNum-1)-shipLengthForTable;
-                                        int rangeFor_x=columsNum-1;
-                                        start_y=random.nextInt(rangeFor_y);
-                                        start_x=random.nextInt(rangeFor_x);
-                                        end_y=start_y+shipLengthForTable;
-                                        end_x=start_x;
-
-                                        System.out.println("START X "+ start_x);
-                                        System.out.println("START Y "+ start_y);
-                                        System.out.println("LENGTH" + shipLength);
-                                        System.out.println("---------------------------------------------------");
-                                }
-                                else {return ;}
-
-                                startCoordinates[0]=start_x;
-                                startCoordinates[1]=start_y;
-                                endCoordinates[0]=end_x;
-                                endCoordinates[1]=end_y;
-
                                 ArrayList<cSquare> squaresInterested;
                                 squaresInterested=getRangeOfSquaresFromCoordinates(
-                                        startCoordinates,
-                                        endCoordinates,
+                                        new int[]{res[0], res[1]},
+                                        new int[]{res[2],res[3]},
                                         orientation
                                 );
 
-                                //there are some squares whhich are already busy from ships
                                 if(!areSquareBusy(squaresInterested)) {
 
                                         cSquare startSquare = squaresInterested.get(0);
@@ -478,7 +374,6 @@ public class cTableSection extends Table implements iTableSection {
                                         }
 
                                         isDropped = true;
-
                                 }
                         }
 
@@ -488,6 +383,64 @@ public class cTableSection extends Table implements iTableSection {
                         tableObjects.add(ship);
                         System.out.println("Ships displayed");
                 }
+        }
+
+        private int [] getPositionAndOrientationFromShipLength(int shipLength) {
+                int [] startCoordinates= new int[2];
+                int [] endCoordinates= new int[2];
+
+                int start_x=-1;
+                int start_y=-1;
+                int end_x=-1;
+                int end_y=-1;
+                int orientationNum=random.nextInt(2);
+
+
+                objectOrientation orientation= (orientationNum<=0) ?
+                        objectOrientation.HORIZONTAL:
+                        objectOrientation.VERTICAL;
+
+
+                int shipLengthForTable=shipLength-1;
+
+                if(orientation==objectOrientation.HORIZONTAL){
+                        int rangeFor_x= (columsNum-1)-shipLengthForTable;
+                        int rangeFor_y= rowsNum-1 ;
+                        start_x=random.nextInt(rangeFor_x);
+                        start_y=random.nextInt(rangeFor_y)+1;
+                        end_x=start_x+shipLengthForTable;
+                        end_y=start_y;
+
+                        System.out.println("START X "+ start_x);
+                        System.out.println("START Y "+ start_y);
+                        System.out.println("LENGTH" + shipLength);
+                        System.out.println("---------------------------------------------------");
+                }
+
+                else if(orientation==objectOrientation.VERTICAL)
+                {
+                        int rangeFor_y= (rowsNum-1)-shipLengthForTable;
+                        int rangeFor_x=columsNum-1;
+                        start_y=random.nextInt(rangeFor_y);
+                        start_x=random.nextInt(rangeFor_x);
+                        end_y=start_y+shipLengthForTable;
+                        end_x=start_x;
+
+                        System.out.println("START X "+ start_x);
+                        System.out.println("START Y "+ start_y);
+                        System.out.println("LENGTH" + shipLength);
+                        System.out.println("---------------------------------------------------");
+                }
+                else {return null;}
+
+                int [] res= new int[5];
+                res[0]=start_x;
+                res[1]=start_y;
+                res[2]=end_x;
+                res[3]=end_y;
+                res[4]=orientationNum;
+
+                return  res;
         }
 
         private String createSquareNameFromCoordinates(
