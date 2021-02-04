@@ -67,7 +67,7 @@ public class cRadar extends cWeapon
             if(!s.isBusy()){continue;}
             if (!s.cointainsAShip()){continue;}
             cShip ship= (cShip) s.isBusyAndObject();
-            if (ship.issank()){continue;}
+            if (ship.isSunk()){continue;}
 
             s.setTextureFromTexture(radarDiscovered);
             ship.updateAndCheckState();

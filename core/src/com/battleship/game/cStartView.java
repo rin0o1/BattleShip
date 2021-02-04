@@ -12,7 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class cStartView implements Screen {
+public class cStartView implements Screen
+{
 
     private Stage stage;
     private Game game;
@@ -54,10 +55,8 @@ public class cStartView implements Screen {
             {
                 return true;
             }
-
         });
         stage.addActor(playButton);
-
 
         TextButton optionsButton = new TextButton(
                 "Settings",
@@ -81,7 +80,7 @@ public class cStartView implements Screen {
                 //  game.setScreen(new OptionScreen(game));
             }
         });
-        stage.addActor(optionsButton);
+        //stage.addActor(optionsButton);
     }
 
     @Override

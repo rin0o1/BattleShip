@@ -9,16 +9,14 @@ public class cShot extends cWeapon
 {
     private String texturePath;
 
-
     public cShot()
     {
         init();
     }
+
     public cShot(cSquare square)
     {
         super(square);
-
-
         init();
     }
 
@@ -32,8 +30,7 @@ public class cShot extends cWeapon
     @Override
     public ArrayList<Object> actionWithObject(){
 
-        String outcomeOfShot="";
-        int idOutcome;
+        gameEvent eventOfShot=null;
         cShip s=null;
 
         ArrayList<Object> result= new ArrayList<>();
@@ -44,31 +41,27 @@ public class cShot extends cWeapon
         {
             s=(cShip) squareLocation.isBusyAndObject();
 
-            boolean issank= s.updateAndCheckState();
+            boolean isSunk= s.updateAndCheckState();
 
-            if(issank)
+            if(isSunk)
             {
                 squareLocation.setTextureForShot();
-                outcomeOfShot="My ship is sank";
-                idOutcome=0;
+                eventOfShot=gameEvent.SHIPSUNK;
             }
             else {
-                outcomeOfShot="Ship hit";
-                idOutcome=1;
+                eventOfShot=gameEvent.SHIPHIT;
                 squareLocation.setTextureForShot();
             }
         }
         else
         {
-            outcomeOfShot="Ship missed";
-            idOutcome=2;
+            eventOfShot=gameEvent.SHIPMISSED;
             squareLocation.setTextureForMissed();
             //set new texture
         }
 
         squareLocation.setIsAvailableForAction(false);
-        result.add(idOutcome);
-        result.add(outcomeOfShot);
+        result.add(eventOfShot);
         result.add(s);
 
         return result;

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Null;
-import org.graalvm.compiler.graph.Node;
+
 
 public class cTableObject extends Actor {
 
@@ -20,7 +20,13 @@ public class cTableObject extends Actor {
 
     public cTableObject()
     {
+        texture=null;
         body= new Image();
+    }
+
+    public cTableObject(Texture texture)
+    {
+        this.texture=texture;
     }
 
     @Override
@@ -49,6 +55,7 @@ public class cTableObject extends Actor {
     {
         body.setDrawable(new TextureRegionDrawable(texture));
     }
+    public  Texture getTexture(){return  this.texture;}
 
     public float getRotationDegreeFromOrientation(
             objectOrientation orientation

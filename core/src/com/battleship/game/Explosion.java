@@ -30,7 +30,7 @@ class Explosion {
             }
         }
 
-        explosionAnimation = new Animation<TextureRegion>(animationTime/16, textureRegion1D);
+        explosionAnimation = new Animation<TextureRegion>(animationTime/20, textureRegion1D);
         explosionTimer = 0;
     }
 

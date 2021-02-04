@@ -3,44 +3,73 @@ package com.battleship.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import java.util.ArrayList;
 
 public class cRightSection extends Actor
 {
-    private ArrayList<cShip> sankShips;
-    private ArrayList<cShip> unsankShips;
+    private ArrayList<cShip> sunkShips;
+    private ArrayList<cShip> unsunkShips;
 
-    private TextButton sankWritten;
-    private TextButton unksankWritten;
+    private TextButton sunkWritten;
+    private TextButton unksunkWritten;
 
     private Stage stage;
     private float startX;
+
+    private float lastFloatPositionY;
 
     public  cRightSection (Stage stage, float startX)
     {
         this.startX=startX;
         this.stage=stage;
-        sankShips= new ArrayList<>();
-        unsankShips=new ArrayList<>();
+        sunkShips = new ArrayList<>();
+        unsunkShips =new ArrayList<>();
 
         float screenHeight= Gdx.graphics.getHeight();
-        sankWritten = new TextButton("sank",
+        sunkWritten = new TextButton("UNKSANK SHIP",
                 cBattleShip.gameSkin);
 
-        sankWritten.setBounds(startX,screenHeight-50,0,0);
-        stage.addActor(sankWritten);
+        sunkWritten.setBounds(startX+50,screenHeight-50,0,0);
+        stage.addActor(sunkWritten);
+
+        unksunkWritten =null;
+        lastFloatPositionY=750;
+
     }
 
-    public void addShips(int list, cShip s)
+    public void addShips( cShip s, boolean isSunk)
     {
-        //create new ship as copy of s
+        cShip ship= s;
+
+        if(isSunk)
+        {
+            unsunkShips.add(s);
+            if(unksunkWritten ==null){
+                unksunkWritten = new TextButton("SANK SHIP",
+                        cBattleShip.gameSkin);
+
+                lastFloatPositionY-=50;
+                unksunkWritten.setBounds(startX+50,lastFloatPositionY,0,0);
+                stage.addActor(unksunkWritten);
+            }
+
+            sunkShips.remove(s);
+            lastFloatPositionY-=30;
+            s.setPosition(startX-50,lastFloatPositionY );
+        }
+
+        sunkShips.add(s);
+        Image img= s.getIconTexture();
+        lastFloatPositionY-=50;
+        img.setPosition(startX-50, lastFloatPositionY);
 
     }
 
-    public  ArrayList<cShip> getList(int list){
+    public  ArrayList<cShip> getList(int list)
+    {
         return  null;
     }
 }

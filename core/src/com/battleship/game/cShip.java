@@ -3,7 +3,6 @@ package com.battleship.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 
 import java.util.ArrayList;
 
@@ -12,27 +11,42 @@ public class cShip extends cTableObject {
     private int length;
     private int shotReceived;
     private objectOrientation orientation;
-    private boolean issank;
+    private boolean isSunk;
+
+    private Image iconTexture;
 
     private ArrayList<cSquare> mySquare;
 
 
     public cShip(
             String name,
-            int length
+            int length,
+            Image iconTexture
     )
     {
         super();
+        this.iconTexture=iconTexture;
+
+        iconTexture.setRotation(
+                getRotationDegreeFromOrientation(
+                        objectOrientation.HORIZONTAL)
+        );
+
         this.setName(name);
         this.length=length;
         this.shotReceived=0;
-
     }
+
+    public  cShip(Texture texture, int length){
+        super(texture);
+        setLength(length);
+    }
+    public  cShip(){}
 
     public boolean updateAndCheckState(){
         shotReceived++;
-        this.issank= shotReceived==length;
-        return  issank;
+        this.isSunk = shotReceived==length;
+        return isSunk;
     }
 
     @Override
@@ -45,9 +59,10 @@ public class cShip extends cTableObject {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        iconTexture.draw(batch,parentAlpha);
     }
 
-    public boolean issank(){return  issank;}
+    public boolean isSunk(){return isSunk;}
 
     public void dropShipOnTable(
             Texture texture_,
@@ -70,4 +85,11 @@ public class cShip extends cTableObject {
     public  ArrayList<cSquare> getMySquare(){return  this.mySquare;}
 
     public int getLength(){return  this.length;}
+
+    public  void setLength(int length){
+        if(length<-1) {return;}
+        this.length=length;
+    }
+
+    public Image getIconTexture(){return iconTexture;}
 }

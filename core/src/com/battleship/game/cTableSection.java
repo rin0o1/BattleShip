@@ -45,7 +45,6 @@ public class cTableSection extends Table implements iTableSection {
         private Stage stage;
         private cGameView gameView;
 
-
         public cTableSection (cGameView gameView)
         {
             super();
@@ -93,7 +92,6 @@ public class cTableSection extends Table implements iTableSection {
              //   cShip ship= getShipsFromTableObjects().get(0);
            //     ship.getBody().moveBy(ship.getX()+(1.5f), ship.getY());
          //       ship.getBody().draw(batch, deltaTime);
-
 
         }
 
@@ -147,7 +145,6 @@ public class cTableSection extends Table implements iTableSection {
                                       /*  icon.setSize(
                                                 icon.getWidth()+20,
                                                 icon.getHeight()+20);*/
-
                                         onWeaponSelected(object,icon);
                                 }
 
@@ -251,33 +248,49 @@ public class cTableSection extends Table implements iTableSection {
                 if(isShot)
                 {
                         cShot shot=new cShot(square);
+
                         ArrayList<Object> res= shot.actionWithObject();
+                        gameEvent event=(gameEvent)res.get(0);
 
-                        if(res.equals(null))return  true;
+                        double point=0;
 
-                        if((int)res.get(0)==0)
+                        if (event==null){return true;}
+
+                        switch (event)
                         {
-                              stage.addActor((cShip)res.get(2));
-                              cShip ship=(cShip)res.get(2);
-                              ArrayList<cSquare> squares=ship.getMySquare();
-                              for (cSquare s: squares)
-                              {
-                                      float[] sLocation=s.getPosition();
-                                      explosionList.add(new Explosion(
-                                              explosionTexture,
-                                              new Rectangle(
-                                                      sLocation[0],
-                                                      sLocation[1],
-                                                      squareWidth,
-                                                      squareHeight),
-                                              2f));
+                                case SHIPHIT:
+                                        System.out.println("My ship hit");
+                                        point=1;
+                                        break;
+                                case SHIPSUNK:
+                                        cShip ship= (cShip) res.get(1);
+                                        int shipLength= ship.getLength();
+                                        point= shipLength*2;
+                                        System.out.println("Ship sunk");
+                                        stage.addActor(ship);
+                                        ArrayList<cSquare> squares=ship.getMySquare();
+                                        for (cSquare s: squares)
+                                        {
+                                                float[] sLocation=s.getPosition();
+                                                explosionList.add(new Explosion(
+                                                        explosionTexture,
+                                                        new Rectangle(
+                                                                sLocation[0],
+                                                                sLocation[1],
+                                                                squareWidth,
+                                                                squareHeight),
+                                                        2f));
 
-                              }
-
-                                //update the list
+                                        }
+                                        gameView.updateShipList(ship,true);
+                                        break;
+                                case SHIPMISSED:
+                                        point=1;
+                                        System.out.println("Ship missed");
+                                        break;
                         }
 
-                        System.out.println((String) res.get(1));
+                        gameView.updateScore(point, true);
                         weaponSelected=null;
 
                         return  true;
@@ -358,10 +371,12 @@ public class cTableSection extends Table implements iTableSection {
                                 new FileHandle(f)
                         );
 
+                        Image imgIcon=new Image(texture);
                         cShip ship= new cShip(
                                 shipName,
-                                shipLength
-                        );
+                                shipLength,
+                                imgIcon
+                                                );
 
                         boolean isDropped=false;
                         int count=0;
@@ -452,6 +467,8 @@ public class cTableSection extends Table implements iTableSection {
                                                 shipLength * squareHeight,
                                                 squaresInterested
                                         );
+
+                                        gameView.updateShipList(ship,false);
 
                                         for (cSquare square :
                                                 squaresInterested)
