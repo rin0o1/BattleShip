@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Null;
 
+import java.util.ArrayList;
+
 
 public class cTableObject extends Actor {
 
@@ -17,6 +19,8 @@ public class cTableObject extends Actor {
     protected Texture texture;
     protected Image body;
     protected Texture lastTexture;
+
+    protected ArrayList<Texture> textures;
 
     public cTableObject()
     {
@@ -55,7 +59,6 @@ public class cTableObject extends Actor {
     {
         body.setDrawable(new TextureRegionDrawable(texture));
     }
-    public  Texture getTexture(){return  this.texture;}
 
     public float getRotationDegreeFromOrientation(
             objectOrientation orientation

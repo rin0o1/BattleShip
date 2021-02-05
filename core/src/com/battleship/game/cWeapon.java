@@ -1,36 +1,26 @@
 package com.battleship.game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import java.util.ArrayList;
 
-public class cWeapon extends  cTableObject
+public abstract class cWeapon extends  cTableObject
 {
-    protected Texture textureOnSelected;
     protected cSquare squareLocation;
 
-    public  cWeapon(){};
-
-    public cWeapon(cSquare squareLocation)
+    public cWeapon(String internalTexture)
     {
         super();
+        init(internalTexture);
+    }
+
+    private void init(String internalTexture){
+        body.setSize(50,50);
+        Texture baseTexture= new Texture(Gdx.files.internal(internalTexture));
+        setTextureFromTexture(baseTexture);
+    }
+
+    public void setSquareLocation(cSquare squareLocation){
         this.squareLocation=squareLocation;
     }
 
-    public Object actionWithObject(ArrayList<cSquare> squareRequired){
-        return  null;
-    }
-
-    public ArrayList<Object> actionWithObject(){
-        System.out.println("general weapon action");
-        return null;
-    }
-
-    public void action(ArrayList<cSquare> squareRequired){
-
-    }
-
-    public void action()
-    {
-        System.out.println("general weapon action");
-
-    }
 }

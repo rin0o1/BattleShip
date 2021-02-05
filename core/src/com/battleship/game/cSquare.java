@@ -18,8 +18,7 @@ public class cSquare extends cTableObject implements iSquare {
                 float [] position,
                 int [] tableCoordinates,
                 String name
-                )
-    {
+                ) {
 
         super();
 
@@ -47,72 +46,50 @@ public class cSquare extends cTableObject implements iSquare {
     {
         setTextureFromTexture(texture);
     }
-
     public void squareTouchDown()
     {
         setTextureFromTexture(textureOnHover, true);
     }
-
-    public  int[] getCoordinates(){return tableCoordinates;}
-
+    public int[] getCoordinates(){return tableCoordinates;}
     public boolean getIsAvailableForAction(){return this.isAvailableForAction;}
-
-    public  void setIsAvailableForAction(boolean isAvailableForAction)
-    {
+    public void setIsAvailableForAction(boolean isAvailableForAction) {
         this.isAvailableForAction =isAvailableForAction;
     }
-
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
     }
-
-    @Override
-    public  void act(float delta){
-        super.act(delta);
-    }
-
     @Override
     public void setState() {
 
     }
-
     @Override
     public void placeObject(cTableObject object) {
         this.object=object;
     }
-
     @Override
     public void removeCurrentObject() {
 
     }
-
     public void setTextureForShot(){
         Texture t= new Texture(Gdx.files.internal("shotHit.PNG"));
         setTextureFromTexture(t);
     }
-
     public void setTextureForMissed(){
         Texture t = new Texture(Gdx.files.internal("shotMissed.PNG"));
         setTextureFromTexture(t);
     }
-
     @Override
     public cTableObject isBusyAndObject() {
         return object;
     }
-
     @Override
     public boolean isBusy() {
         return object!=null;
     }
-
     public  boolean cointainsAShip()
     {
         return  object instanceof cShip;
     }
-
-
 
 }

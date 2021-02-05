@@ -7,29 +7,13 @@ import java.util.ArrayList;
 
 public class cRadar extends cWeapon
 {
-
     private Texture radarDiscovered;
 
-    public cRadar(){
-        init();
-    }
-
-    public cRadar(cSquare square)
-    {
-        super(square);
-        init();
+    public cRadar() {
+        super("radar_01.png");
         radarDiscovered= new Texture(Gdx.files.internal("radarDiscovered.gif"));
     }
-
-    private void init(){
-        Texture baseTexture= new Texture(Gdx.files.internal("radar_01.png"));
-        setTextureFromTexture(baseTexture);
-        body.setSize(50,50);
-
-    }
-
-    public ArrayList<String> getSquareCoordinatesRequired()
-    {
+    public ArrayList<String> getSquareCoordinatesRequired() {
         ArrayList<String> res= new ArrayList<>();
         int [] coordinates= squareLocation.getCoordinates();
         int start_x= coordinates[0];
@@ -52,15 +36,10 @@ public class cRadar extends cWeapon
         res.add(coordinates8);
         return  res;
     }
-
-    private String buildString(int start_X, int start_Y)
-    {
+    private String buildString(int start_X, int start_Y) {
         return String.valueOf(start_X).concat(",").concat(String.valueOf(start_Y));
     }
-
-    @Override
-    public void action(ArrayList<cSquare> squareRequired)
-    {
+    public void action(ArrayList<cSquare> squareRequired) {
 
         for (cSquare s: squareRequired)
         {

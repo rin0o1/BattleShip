@@ -5,11 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -39,8 +37,8 @@ public class cWeaponHandler
         weapons.add(r);
     }
     public int shotFunction(cSquare square) {
-        cShot shot=new cShot(square);
-
+        cShot shot=new cShot();
+        shot.setSquareLocation(square);
         ArrayList<Object> res= shot.actionWithObject();
         gameEvent event=(gameEvent)res.get(0);
 
@@ -104,7 +102,8 @@ public class cWeaponHandler
 
         if(!canBePlaced){System.out.println("The radar cannot be placed here"); return ;}
 
-        cRadar r=new cRadar(square);
+        cRadar r=new cRadar();
+        r.setSquareLocation(square);
         ArrayList<cSquare> squares=new ArrayList<>();
         ArrayList<String> squareCoordinatesRequired;
         squareCoordinatesRequired=r.getSquareCoordinatesRequired();

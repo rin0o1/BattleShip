@@ -7,27 +7,11 @@ import java.util.ArrayList;
 
 public class cShot extends cWeapon
 {
-    private String texturePath;
 
     public cShot()
     {
-        init();
+        super("WeaponBattleshipStandardGun.png");
     }
-
-    public cShot(cSquare square)
-    {
-        super(square);
-        init();
-    }
-
-    private void init()
-    {
-        Texture baseTexture= new Texture(Gdx.files.internal("WeaponBattleshipStandardGun.png"));
-        setTextureFromTexture(baseTexture);
-        body.setSize(50,50);
-    }
-
-    @Override
     public ArrayList<Object> actionWithObject(){
 
         gameEvent eventOfShot=null;
@@ -42,7 +26,6 @@ public class cShot extends cWeapon
             s=(cShip) squareLocation.isBusyAndObject();
 
             boolean isSunk= s.updateAndCheckState();
-
             if(isSunk)
             {
                 squareLocation.setTextureForShot();
