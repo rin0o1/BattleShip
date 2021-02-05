@@ -17,177 +17,70 @@ import java.util.*;
 
 public class cTableSection extends Table implements iTableSection {
 
-        private LinkedList<Explosion> explosionList;
-        private Texture explosionTexture;
-
         //get those values from a setting file
         private final float squareHeight;
         private final float squareWidth;
         private final int columsNum;
         private final int rowsNum;
-        private int radarCount;
-
-        private cWeapon weaponSelected;
-        private Image weaponIconSelected;
-        private ArrayList<cWeapon> weapons;
         private cWeaponHandler weaponHandler;
-
         private final ArrayList<cTableObject> tableObjects;
-
         private final String shipsTexturesPath;
-        private final Random random;
-
         private Stage stage;
         private cGameView gameView;
 
-        public cTableSection (cGameView gameView)
-        {
+        public cTableSection (cGameView gameView) {
             super();
-
-            setTouchable(Touchable.enabled);
-            setFillParent(true);
             squareHeight=50;
             squareWidth=50;
             columsNum=10;
             rowsNum=10;
             tableObjects= new ArrayList<cTableObject>();
             shipsTexturesPath= "C:\\Users\\Admin\\OneDrive - Brunel University London\\Courses\\CS1701-GroupProject\\GameDevelopment\\BattleShip\\core\\assets\\ships";
-            random= new Random();
-            radarCount=4;
-            weapons= new ArrayList<>();
-            weaponSelected=null;
 
             weaponHandler= new cWeaponHandler(this);
 
             this.gameView=gameView;
 
-            explosionTexture = new Texture("explosion.png");
-            explosionList= new LinkedList<>();
         }
-
         public void updateShipList(cShip ship, boolean value){
                 gameView.updateShipList(ship, value);
         }
-
-        public void addExplosion(float locX, float locY){
-                explosionList.add(new Explosion(
-                        explosionTexture,
-                        new Rectangle(
-                                locX,
-                                locY,
-                                squareWidth,
-                                squareHeight),
-                        2f));
-        }
-
         @Override
         public void initSection(Stage stage){
                 this.stage=stage;
-                initWeapon();
-                //weaponHandler.initWeapon();
+
                 buildTable();
                 displayShips();
-
         }
-
-        private void initWeapon() {
-                cRadar r= new cRadar();
-                cShot s= new cShot();
-                weapons.add(s);
-                weapons.add(r);
-        }
-
         //this method is called as loop from cGameView class
         public void renderSection(SpriteBatch batch, float deltaTime){
-                ListIterator<Explosion> explosionListIterator = explosionList.listIterator();
-                //rendering explosions
-                while (explosionListIterator.hasNext()) {
-                        Explosion explosion = explosionListIterator.next();
-                        explosion.update(deltaTime);
-                        explosion.draw(batch);
-                }
-             //   cShip ship= getShipsFromTableObjects().get(0);
-           //     ship.getBody().moveBy(ship.getX()+(1.5f), ship.getY());
-         //       ship.getBody().draw(batch, deltaTime);
-
+                weaponHandler.renderAnimations(batch,deltaTime);
         }
-
         @Override
         public void buildTable() {
-                float x;
-                float y;
 
                 float startHeight=Gdx.graphics.getHeight()+200;
                 float startWidth=Gdx.graphics.getWidth();
-                float width=squareWidth;
-                float height=squareHeight;
-                String name="";
 
-                //add weapons
-                TextButton weaponWritten=new TextButton("WEAPONs",
-                        cBattleShip.gameSkin);
-                float weaponWritten_x=(startWidth / 2 - (width*rowsNum)/2);
-                float weaponWritten_y=(startHeight / 2 - (height*columsNum)/2)-50;
-                weaponWritten.setBounds(
-                        weaponWritten_x,
-                        weaponWritten_y,
-                        0,
-                        0);
-                stage.addActor(weaponWritten);
-
-                //designin
-                for(int i=1; i<weapons.size()+1;i++)
-                {
-                        final cWeapon object=weapons.get(i-1);
-                        final Image icon=object.getBody();
-
-                        icon.setPosition(weaponWritten_x+80*i,weaponWritten_y-20);
-
-                        icon.addListener(new InputListener(){
-                                public void touchUp(
-                                        InputEvent event,
-                                        float offsetX,
-                                        float offsetY,
-                                        int pointer,
-                                        int button)
-                                {
-                                      /*  icon.setSize(
-                                                icon.getWidth()+20,
-                                                icon.getHeight()+20);*/
-                                        //weaponHandler.onWeaponSelected();
-                                        onWeaponSelected(object,icon);
-                                }
-
-                                public boolean touchDown(
-                                        InputEvent event,
-                                        float offsetX,
-                                        float offsetY,
-                                        int pointer,
-                                        int button)
-                                {
-                                        return true;
-                                }
-                        });
-                        stage.addActor(icon);
-                }
+                weaponHandler.createWeaponList(startWidth, startHeight);
 
                 for(int h=0; h<columsNum; h++)
                 {
 
-                        y = (startHeight / 2
-                                - (height*columsNum)/2) + h*height;
+                        float y = (startHeight / 2
+                                - (squareHeight*columsNum)/2) + h*squareHeight;
 
                         for (int i = 0; i < rowsNum; i++) {
 
-                                x = (startWidth / 2
-                                        - (width*rowsNum)/2) + i*width;
+                                float x = (startWidth / 2
+                                        - (squareWidth*rowsNum)/2) + i*squareWidth;
 
-                                name=createSquareNameFromCoordinates(i,h);
+                                String name =createSquareNameFromCoordinates(i,h);
 
                                 final cSquare square=new cSquare
                                         (
-                                        width,
-                                        height,
+                                                squareWidth,
+                                                squareHeight,
                                         new float[]{x, y},
                                         new int[] {i,h},
                                         name
@@ -225,88 +118,18 @@ public class cTableSection extends Table implements iTableSection {
                         }
                 }
         }
-
-        private void onWeaponSelected(cWeapon weapon, Image icon) {
-                //if is available
-                weaponSelected =weapon;
-                weaponIconSelected=icon;
-                System.out.println("Weapon selected");
-        }
-
         private void onSquareTouchUp(cSquare square)
         {
                 square.squareTouchUp();
         }
-
         private boolean onSquareTouchDown(cSquare square) {
                 square.squareTouchDown();
-                weaponHandler(square);
+                weaponHandler.weaponHandler(square);
                 return true;
         }
-
-        private void weaponHandler(cSquare square){
-                if(weaponSelected==null){ System.out.println("Please choose a weapon"); return;}
-
-                boolean isShot= weaponSelected instanceof cShot
-                        && square.getIsAvailableForAction();
-                if(isShot) { shotFunction(square); }
-
-                boolean isRadarSelected= weaponSelected instanceof cRadar;
-                if(isRadarSelected) { placeRadarFunction(square);}
+        public void updateScore(double score){
+                gameView.updateScore(score, true);
         }
-
-        private void placeRadarFunction(cSquare square) {
-                int [] coordinates= square.getCoordinates();
-                int square_X= coordinates[0];
-                int square_Y= coordinates[1];
-                if(!isRadarAvailable()){System.out.println("You used all radars available"); return ;}
-
-                boolean canBePlaced=
-                        square_X>0 &&
-                                square_X <columsNum-1 &&
-                                square_Y> 0 &&
-                                square_Y< rowsNum-1;
-
-                if(!canBePlaced){System.out.println("The radar cannot be placed here"); return ;}
-
-                cRadar r=new cRadar(square);
-                ArrayList<cSquare> squares=new ArrayList<>();
-                ArrayList<String> squareCoordinatesRequired;
-                squareCoordinatesRequired=r.getSquareCoordinatesRequired();
-
-                for (String sC: squareCoordinatesRequired)
-                {
-                        String [] squareCoordinates=sC.split(",");
-                        int s_x=Integer.valueOf(squareCoordinates[0]);
-                        int s_y=Integer.valueOf(squareCoordinates[1]);
-
-                        String fromCoordinatesToName= createSquareNameFromCoordinates(
-                                s_x,
-                                s_y
-                        );
-                        cSquare singleSquareRequired= findActor(fromCoordinatesToName);
-
-                        squares.add(singleSquareRequired);
-                }
-
-                r.action(squares);
-                radarCount-=1;
-                System.out.println("Radar available "+ radarCount);
-                weaponSelected=null;
-                return;
-        }
-
-        private void shotFunction(cSquare square) {
-                int points= weaponHandler.shotFunction(square);
-                gameView.updateScore(points, true);
-                weaponSelected=null;
-        }
-
-        private boolean isRadarAvailable()
-        {
-                return radarCount>0;
-        }
-
         @Override
         public void displayShips() {
 
@@ -384,7 +207,6 @@ public class cTableSection extends Table implements iTableSection {
                         System.out.println("Ships displayed");
                 }
         }
-
         private int [] getPositionAndOrientationFromShipLength(int shipLength) {
                 int [] startCoordinates= new int[2];
                 int [] endCoordinates= new int[2];
@@ -393,6 +215,8 @@ public class cTableSection extends Table implements iTableSection {
                 int start_y=-1;
                 int end_x=-1;
                 int end_y=-1;
+
+                Random random= new Random();
                 int orientationNum=random.nextInt(2);
 
 
@@ -442,19 +266,10 @@ public class cTableSection extends Table implements iTableSection {
 
                 return  res;
         }
-
-        private String createSquareNameFromCoordinates(
-                int x,
-                int y
-        ) {
+        public String createSquareNameFromCoordinates(int x, int y) {
                 return String.valueOf(x).concat("_").concat(String.valueOf(y));
         }
-
-        private ArrayList<cSquare> getRangeOfSquaresFromCoordinates(
-                int[] startCoordinates,
-                int [] endCoordinates,
-                objectOrientation orientation
-        ) {
+        private ArrayList<cSquare> getRangeOfSquaresFromCoordinates(int[] startCoordinates, int [] endCoordinates, objectOrientation orientation) {
                 ArrayList<cSquare> result= new ArrayList<>();
 
 
@@ -483,11 +298,12 @@ public class cTableSection extends Table implements iTableSection {
 
                 return result;
         }
-
+        public Actor getActorFromName(String name){
+                return findActor(name);
+        }
         private cSquare getSquareFromName(String name){
                 return findActor(name);
         }
-
         private boolean areSquareBusy(ArrayList<cSquare> squares){
                 for (cSquare s:
                      squares) {
@@ -495,23 +311,14 @@ public class cTableSection extends Table implements iTableSection {
                 }
                 return  false;
         }
-
-        private ArrayList<cShip> getShipsFromTableObjects(){
-                ArrayList<cShip> ships= new ArrayList<>();
-                for (cTableObject o:
-                     tableObjects) {
-                        if (o instanceof cShip){
-                                ships.add((cShip) o);
-                        }
-                }
-                return   ships;
-        }
-
+        public Stage getStage(){return this.stage;}
+        public int getColumsNum(){return this.columsNum;}
+        public int getRowsNum(){return this.rowsNum;}
+        public float[] getSquareDimensions(){return new float[]{squareWidth,squareHeight};}
         @Override
         public void showMessage(String message) {
 
         }
-
         @Override
         public void draw(Batch batch, float parentAlpha) {
                 super.draw(batch, parentAlpha);
@@ -520,5 +327,4 @@ public class cTableSection extends Table implements iTableSection {
                         o.draw(batch,parentAlpha);
                 }
         }
-
 }

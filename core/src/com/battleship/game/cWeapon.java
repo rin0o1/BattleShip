@@ -1,8 +1,5 @@
 package com.battleship.game;
-
 import com.badlogic.gdx.graphics.Texture;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class cWeapon extends  cTableObject
