@@ -27,7 +27,7 @@ public class cTableSection extends Table implements iTableSection {
         private final String shipsTexturesPath;
         private Stage stage;
         private cGameView gameView;
-
+        //test MAIN ONLINE
         public cTableSection (cGameView gameView) {
             super();
             squareHeight=50;
