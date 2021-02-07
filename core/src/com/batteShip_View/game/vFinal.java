@@ -1,4 +1,4 @@
-package com.battleship.game;
+package com.batteShip_View.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -11,24 +11,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.cBattleShip;
 
-public class cStartView implements Screen
+public class vFinal implements Screen
 {
-
     private Stage stage;
     private Game game;
-
-    public cStartView(Game agame){
+    public vFinal(Game agame, int score){
         game = agame;
         stage = new Stage(new ScreenViewport());
-        Label title = new Label("BATTLESHIP", cBattleShip.gameSkin);
+        String text= "FINAL SCORE".concat(String.valueOf(score));
+        Label title = new Label(text, cBattleShip.gameSkin);
         title.setAlignment(Align.center);
         title.setY(Gdx.graphics.getHeight()*2/3);
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
 
-        TextButton playButton = new TextButton("Single player",
-                                                cBattleShip.gameSkin);
+        TextButton playButton = new TextButton("Play again",
+                cBattleShip.gameSkin);
 
         playButton.setWidth(Gdx.graphics.getWidth()/2);
 
@@ -44,7 +44,7 @@ public class cStartView implements Screen
                                  int pointer,
                                  int button)
             {
-                   game.setScreen(new cGameView(game));
+                game.setScreen(new vStart(game));
             }
             @Override
             public boolean touchDown (InputEvent event,
@@ -76,18 +76,16 @@ public class cStartView implements Screen
                                  int pointer,
                                  int button)
             {
-                //call cGameView
+                //call vGame
                 //  game.setScreen(new OptionScreen(game));
             }
         });
         //stage.addActor(optionsButton);
     }
-
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
-
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -95,27 +93,22 @@ public class cStartView implements Screen
         stage.act();
         stage.draw();
     }
-
     @Override
     public void resize(int width, int height) {
 
     }
-
     @Override
     public void pause() {
 
     }
-
     @Override
     public void resume() {
 
     }
-
     @Override
     public void hide() {
 
     }
-
     @Override
     public void dispose() {
         stage.dispose();

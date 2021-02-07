@@ -1,9 +1,10 @@
-package com.battleship.game;
+package com;
 
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.batteShip_View.game.vStart;
 
 public class cBattleShip extends Game {
 	static public Skin gameSkin;
@@ -13,8 +14,8 @@ public class cBattleShip extends Game {
 		gameSkin = new Skin(Gdx.files.internal(path));
 
 		Gdx.graphics.setWindowedMode(1000,800);
-		this.setScreen(new cStartView(this));
-	//this.setScreen(new cGameView(this));
+		this.setScreen(new vStart(this));
+	//this.setScreen(new vGame(this));
 	}
 	public void render () {
 		super.render();

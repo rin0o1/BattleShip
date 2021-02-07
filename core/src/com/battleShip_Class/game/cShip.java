@@ -1,8 +1,9 @@
-package com.battleship.game;
+package com.battleShip_Class.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.battelShip_Enum.game.eObjectOrientation;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class cShip extends cTableObject {
 
     private int length;
     private int shotReceived;
-    private objectOrientation orientation;
+    private eObjectOrientation orientation;
     private boolean isSunk;
 
     private Image iconTexture;
@@ -28,7 +29,7 @@ public class cShip extends cTableObject {
 
         iconTexture.setRotation(
                 getRotationDegreeFromOrientation(
-                        objectOrientation.HORIZONTAL)
+                        eObjectOrientation.HORIZONTAL)
         );
 
         this.setName(name);
@@ -53,7 +54,7 @@ public class cShip extends cTableObject {
     public void dropShipOnTable(
             Texture texture_,
             float[] coordinates,
-            objectOrientation orientation,
+            eObjectOrientation orientation,
             float squareHeight,
             ArrayList<cSquare> squares
             ) {

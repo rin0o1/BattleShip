@@ -1,4 +1,4 @@
-package com.battleship.game;
+package com.battleShip_HelperClass.game;
 
 import com.badlogic.gdx.graphics.Texture;
 

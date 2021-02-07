@@ -1,21 +1,23 @@
-package com.battleship.game;
+package com.battleShip_Section.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.batteShip_View.game.vGame;
+import com.battelShip_Enum.game.eObjectOrientation;
+
+import com.battleShip_HelperClass.game.cHelper;
+import com.battleShip_Class.game.*;
 
 import java.io.File;
 import java.util.*;
 
-public  class cTableSection extends Table  {
+public  class sTable extends Table  {
 
         //get those values from a setting file
         private final float squareHeight;
@@ -26,9 +28,9 @@ public  class cTableSection extends Table  {
         private final ArrayList<cTableObject> tableObjects;
         private final String shipsTexturesPath;
         private Stage stage;
-        private cGameView gameView;
+        private vGame gameView;
 
-        public cTableSection (cGameView gameView) {
+        public sTable(vGame gameView) {
             super();
             squareHeight=50;
             squareWidth=50;
@@ -156,9 +158,9 @@ public  class cTableSection extends Table  {
                         while(!isDropped)
                         {
                                 int [] res= getPositionAndOrientationFromShipLength(shipLength);
-                                objectOrientation orientation= (res[4]<=0) ?
-                                        objectOrientation.HORIZONTAL:
-                                        objectOrientation.VERTICAL;
+                                eObjectOrientation orientation= (res[4]<=0) ?
+                                        eObjectOrientation.HORIZONTAL:
+                                        eObjectOrientation.VERTICAL;
 
                                 ArrayList<cSquare> squaresInterested;
                                 squaresInterested=getRangeOfSquaresFromCoordinates(
@@ -176,7 +178,7 @@ public  class cTableSection extends Table  {
                                         startSquarePosition[0]=pos[0];
                                         startSquarePosition[1]=pos[1];
 
-                                        startSquarePosition[1]+=(orientation==objectOrientation.HORIZONTAL)? squareHeight :0;
+                                        startSquarePosition[1]+=(orientation== eObjectOrientation.HORIZONTAL)? squareHeight :0;
 
                                         ship.dropShipOnTable(
                                                 texture,
@@ -217,14 +219,14 @@ public  class cTableSection extends Table  {
                 int orientationNum=random.nextInt(2);
 
 
-                objectOrientation orientation= (orientationNum<=0) ?
-                        objectOrientation.HORIZONTAL:
-                        objectOrientation.VERTICAL;
+                eObjectOrientation orientation= (orientationNum<=0) ?
+                        eObjectOrientation.HORIZONTAL:
+                        eObjectOrientation.VERTICAL;
 
 
                 int shipLengthForTable=shipLength-1;
 
-                if(orientation==objectOrientation.HORIZONTAL){
+                if(orientation== eObjectOrientation.HORIZONTAL){
                         int rangeFor_x= (columsNum-1)-shipLengthForTable;
                         int rangeFor_y= rowsNum-1 ;
                         start_x=random.nextInt(rangeFor_x);
@@ -238,7 +240,7 @@ public  class cTableSection extends Table  {
                         System.out.println("---------------------------------------------------");
                 }
 
-                else if(orientation==objectOrientation.VERTICAL)
+                else if(orientation== eObjectOrientation.VERTICAL)
                 {
                         int rangeFor_y= (rowsNum-1)-shipLengthForTable;
                         int rangeFor_x=columsNum-1;
@@ -266,11 +268,11 @@ public  class cTableSection extends Table  {
         public String createSquareNameFromCoordinates(int x, int y) {
                 return String.valueOf(x).concat("_").concat(String.valueOf(y));
         }
-        private ArrayList<cSquare> getRangeOfSquaresFromCoordinates(int[] startCoordinates, int [] endCoordinates, objectOrientation orientation) {
+        private ArrayList<cSquare> getRangeOfSquaresFromCoordinates(int[] startCoordinates, int [] endCoordinates, eObjectOrientation orientation) {
                 ArrayList<cSquare> result= new ArrayList<>();
 
 
-                if(orientation==objectOrientation.HORIZONTAL){
+                if(orientation== eObjectOrientation.HORIZONTAL){
                         int start_x=startCoordinates[0];
                         int end_x=endCoordinates[0];
                         for (int i=start_x;i<=end_x; i++){
@@ -282,7 +284,7 @@ public  class cTableSection extends Table  {
                         }
                 }
 
-                else if(orientation==objectOrientation.VERTICAL){
+                else if(orientation== eObjectOrientation.VERTICAL){
                         int start_y=startCoordinates[1];
                         int end_y=endCoordinates[1];
                         for (int i=start_y;i<=end_y; i++){

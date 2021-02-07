@@ -1,4 +1,4 @@
-package com.battleship.game;
+package com.battelShip_Enum.game;
 
 public enum eGameEvent {
     SHIPMISSED,

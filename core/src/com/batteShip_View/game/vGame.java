@@ -1,41 +1,40 @@
-package com.battleship.game;
+package com.batteShip_View.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.battleShip_Section.game.sLeft;
+import com.battleShip_Section.game.sRight;
+import com.battleShip_Section.game.sTable;
+import com.battleShip_Class.game.cShip;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
-
-public class cGameView implements Screen {
+public class vGame implements Screen {
 
     private Stage stage;
 
-    private cTableSection tableSection;
-    private cRightSection rightSection;
-    private cLeftSection leftSection;
+    private sTable tableSection;
+    private sRight rightSection;
+    private sLeft leftSection;
 
     private SpriteBatch batch;
 
-    public cGameView(Game game) {
+    public vGame(Game game) {
 
         batch= new SpriteBatch();
 
-        tableSection= new cTableSection(this);
+        tableSection= new sTable(this);
 
         stage = new Stage( new ScreenViewport());
         stage.addActor(tableSection);
 
-        leftSection= new cLeftSection(stage,game);
+        leftSection= new sLeft(stage,game);
 
-        rightSection= new cRightSection(stage,
+        rightSection= new sRight(stage,
                 (50*10)+leftSection.getWidth()+110);
 
         tableSection.initSection(stage);

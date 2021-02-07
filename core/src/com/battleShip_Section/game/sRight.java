@@ -1,14 +1,16 @@
-package com.battleship.game;
+package com.battleShip_Section.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.cBattleShip;
+import com.battleShip_Class.game.cShip;
 
 import java.util.ArrayList;
 
-public class cRightSection extends Actor
+public class sRight extends Actor
 {
     private ArrayList<cShip> sunkShips;
     private ArrayList<cShip> unsunkShips;
@@ -18,7 +20,7 @@ public class cRightSection extends Actor
     private float startX;
     private float lastFloatPositionY;
 
-    public  cRightSection (Stage stage, float startX) {
+    public sRight(Stage stage, float startX) {
         this.startX=startX;
         this.stage=stage;
         sunkShips = new ArrayList<>();

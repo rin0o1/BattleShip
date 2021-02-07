@@ -1,16 +1,16 @@
-package com.battleship.game;
+package com.battleShip_Section.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import org.w3c.dom.Text;
+import com.batteShip_View.game.vFinal;
+import com.cBattleShip;
 
-public class cLeftSection extends Actor  {
+public class sLeft extends Actor  {
 
     private TextButton score;
     private TextButton quit;
@@ -19,7 +19,7 @@ public class cLeftSection extends Actor  {
     private Stage stage;
     private Game game;
 
-    public  cLeftSection(Stage stage, Game game)
+    public sLeft(Stage stage, Game game)
     {
 
         this.setWidth(200);
@@ -76,7 +76,7 @@ public class cLeftSection extends Actor  {
     }
     public void finalView()
     {
-        cFinalView finalView=new cFinalView(game, scoreValueDouble );
+        vFinal finalView=new vFinal(game, scoreValueDouble );
         game.setScreen(finalView);
     }
 

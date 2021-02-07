@@ -1,5 +1,7 @@
-package com.battleship.game;
+package com.battleShip_Class.game;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.battleShip_Section.game.sTable;
+import com.cBattleShip;
 
 
 public class cMessageOutput {
@@ -7,8 +9,7 @@ public class cMessageOutput {
     private static TextButton messageBoxText;
     private static String baseMessage;
 
-    public  cMessageOutput(cTableSection section , float startWidth, float startHeight)
-    {
+    public  cMessageOutput(sTable section , float startWidth, float startHeight) {
         baseMessage="OUPUT: ";
         messageBoxText=new TextButton(baseMessage + " WELCOME!",
                 cBattleShip.gameSkin);
@@ -21,13 +22,8 @@ public class cMessageOutput {
         section.getStage().addActor(messageBoxText);
     }
 
-    public TextButton getMessageBoxText(){
-        return messageBoxText;
-    }
-
     public  static void showMessage(String message){
         messageBoxText.setText(baseMessage+ message );
     }
-
 
 }

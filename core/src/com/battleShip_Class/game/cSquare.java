@@ -1,8 +1,7 @@
-package com.battleship.game;
+package com.battleShip_Class.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 
 
 public class cSquare extends cTableObject  {

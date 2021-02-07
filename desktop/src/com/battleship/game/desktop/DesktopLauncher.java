@@ -2,7 +2,7 @@ package com.battleship.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.battleship.game.cBattleShip;
+import com.cBattleShip;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

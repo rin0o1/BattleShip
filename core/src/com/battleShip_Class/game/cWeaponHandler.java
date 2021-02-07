@@ -1,4 +1,4 @@
-package com.battleship.game;
+package com.battleShip_Class.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -7,6 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.battelShip_Enum.game.eGameEvent;
+import com.battleShip_Section.game.sTable;
+import com.cBattleShip;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,14 +17,14 @@ import java.util.ListIterator;
 
 public class cWeaponHandler
 {
-    private cTableSection section;
+    private sTable section;
     private ArrayList<cWeapon> weapons;
     private cWeapon weaponSelected;
     private int radarCount;
-    private LinkedList<Explosion> explosionList;
+    private LinkedList<cExplosion> explosionList;
     private Texture explosionTexture;
 
-    public  cWeaponHandler(cTableSection section){
+    public  cWeaponHandler(sTable section){
         this.section=section;
         weapons= new ArrayList<>();
         initWeapon();
@@ -79,7 +82,7 @@ public class cWeaponHandler
     }
     public void addExplosion(float locX, float locY) {
         float [] squareDimensions= section.getSquareDimensions();
-        explosionList.add(new Explosion(
+        explosionList.add(new cExplosion(
                 explosionTexture,
                 new Rectangle(
                         locX,
@@ -151,11 +154,11 @@ public class cWeaponHandler
 
     }
     public void renderAnimations(SpriteBatch batch, float deltaTime) {
-        ListIterator<Explosion> explosionListIterator = explosionList.listIterator();
+        ListIterator<cExplosion> explosionListIterator = explosionList.listIterator();
 
         //rendering explosions
         while (explosionListIterator.hasNext()) {
-            Explosion explosion = explosionListIterator.next();
+            cExplosion explosion = explosionListIterator.next();
             explosion.update(deltaTime);
             explosion.draw(batch);
         }

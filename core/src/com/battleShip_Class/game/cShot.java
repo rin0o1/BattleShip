@@ -1,4 +1,6 @@
-package com.battleship.game;
+package com.battleShip_Class.game;
+
+import com.battelShip_Enum.game.eGameEvent;
 
 import java.util.ArrayList;
 

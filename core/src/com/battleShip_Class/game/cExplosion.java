@@ -1,4 +1,4 @@
-package com.battleship.game;
+package com.battleShip_Class.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -6,14 +6,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
-class Explosion {
+class cExplosion {
 
     private Animation<TextureRegion> explosionAnimation;
     private float explosionTimer;
     private Rectangle boundingBox;
     private float animationTime;
 
-    Explosion(Texture texture, Rectangle boundingBox, float totalAnimationTime) {
+    public cExplosion(Texture texture, Rectangle boundingBox, float totalAnimationTime) {
         this.boundingBox = boundingBox;
         this.animationTime=totalAnimationTime;
         //split texture

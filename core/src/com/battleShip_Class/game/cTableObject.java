@@ -1,12 +1,11 @@
-package com.battleship.game;
+package com.battleShip_Class.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
-import java.util.ArrayList;
+import com.battelShip_Enum.game.eObjectOrientation;
 
 
 public class cTableObject extends Actor {
@@ -49,7 +48,7 @@ public class cTableObject extends Actor {
     }
 
     public float getRotationDegreeFromOrientation(
-            objectOrientation orientation
+            eObjectOrientation orientation
     ){
         switch (orientation){
             case VERTICAL:return 0;
