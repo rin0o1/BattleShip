@@ -48,7 +48,6 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        
     }
 }
 
@@ -61,6 +60,6 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.esotericsoftware.spine:spine-libgdx:3.6.53.1"
         api "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.4"
-        
+        compile "io.socket:socket.io-client:0.6.2"
     }
 }
