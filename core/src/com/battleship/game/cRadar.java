@@ -59,3 +59,5 @@ public class cRadar extends cWeapon
     }
 
 }
+
+//radarDiscovered.gif
