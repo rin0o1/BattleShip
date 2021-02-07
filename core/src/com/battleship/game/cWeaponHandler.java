@@ -40,7 +40,7 @@ public class cWeaponHandler
         cShot shot=new cShot();
         shot.setSquareLocation(square);
         ArrayList<Object> res= shot.actionWithObject();
-        gameEvent event=(gameEvent)res.get(0);
+        eGameEvent event=(eGameEvent)res.get(0);
 
         int point=0;
 
@@ -118,7 +118,7 @@ public class cWeaponHandler
                     s_x,
                     s_y
             );
-            cSquare singleSquareRequired= (cSquare) section.getActorFromName(fromCoordinatesToName);
+            cSquare singleSquareRequired= section.getSquareFromName(fromCoordinatesToName);
 
             squares.add(singleSquareRequired);
         }

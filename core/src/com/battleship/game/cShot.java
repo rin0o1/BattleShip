@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 public class cShot extends cWeapon
 {
-
     public cShot()
     {
         super("WeaponBattleshipStandardGun.png", "to shot");
     }
     public ArrayList<Object> actionWithObject(){
 
-        gameEvent eventOfShot=null;
+        eGameEvent eventOfShot=null;
         cShip s=null;
 
         ArrayList<Object> result= new ArrayList<>();
@@ -26,16 +25,16 @@ public class cShot extends cWeapon
             if(isSunk)
             {
                 squareLocation.setTextureShot();
-                eventOfShot=gameEvent.SHIPSUNK;
+                eventOfShot= eGameEvent.SHIPSUNK;
             }
             else {
-                eventOfShot=gameEvent.SHIPHIT;
+                eventOfShot= eGameEvent.SHIPHIT;
                 squareLocation.setTextureShot();
             }
         }
         else
         {
-            eventOfShot=gameEvent.SHIPMISSED;
+            eventOfShot= eGameEvent.SHIPMISSED;
             squareLocation.setTextureMissed();
             //set new texture
         }
@@ -46,7 +45,5 @@ public class cShot extends cWeapon
 
         return result;
     }
-
-
 
 }

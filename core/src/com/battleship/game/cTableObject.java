@@ -19,17 +19,9 @@ public class cTableObject extends Actor {
     protected Image body;
     protected Texture lastTexture;
 
-    protected ArrayList<Texture> textures;
-
-    public cTableObject()
-    {
+    public cTableObject() {
         texture=null;
         body= new Image();
-    }
-
-    public cTableObject(Texture texture)
-    {
-        this.texture=texture;
     }
 
     @Override
@@ -37,17 +29,14 @@ public class cTableObject extends Actor {
         super.draw(batch, parentAlpha);
         body.draw(batch, parentAlpha);
     }
-
     public Image getBody(){
         return body;
     }
-
     public float[] getPosition(){
         return position;
     }
 
-    public void setTextureFromTexture(Texture texture)
-    {
+    public void setTextureFromTexture(Texture texture) {
         lastTexture = (this.texture!=null) ? this.texture:texture;
 
         this.texture=texture;

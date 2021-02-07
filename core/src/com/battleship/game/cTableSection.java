@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import java.io.File;
 import java.util.*;
 
-public  class cTableSection extends Table implements iTableSection {
+public  class cTableSection extends Table  {
 
         //get those values from a setting file
         private final float squareHeight;
@@ -45,18 +45,15 @@ public  class cTableSection extends Table implements iTableSection {
         public void updateShipList(cShip ship, boolean value){
                 gameView.updateShipList(ship, value);
         }
-        @Override
         public void initSection(Stage stage){
                 this.stage=stage;
 
                 buildTable();
                 displayShips();
         }
-        //this method is called as loop from cGameView class
         public void renderSection(SpriteBatch batch, float deltaTime){
                 weaponHandler.renderAnimations(batch,deltaTime);
         }
-        @Override
         public void buildTable() {
 
                 float startHeight=Gdx.graphics.getHeight()+200;
@@ -131,7 +128,6 @@ public  class cTableSection extends Table implements iTableSection {
         public void updateScore(double score){
                 gameView.updateScore(score, true);
         }
-        @Override
         public void displayShips() {
 
 
@@ -299,10 +295,7 @@ public  class cTableSection extends Table implements iTableSection {
 
                 return result;
         }
-        public Actor getActorFromName(String name){
-                return findActor(name);
-        }
-        private cSquare getSquareFromName(String name){
+        public cSquare getSquareFromName(String name){
                 return findActor(name);
         }
         private boolean areSquareBusy(ArrayList<cSquare> squares){
@@ -316,10 +309,6 @@ public  class cTableSection extends Table implements iTableSection {
         public int getColumsNum(){return this.columsNum;}
         public int getRowsNum(){return this.rowsNum;}
         public float[] getSquareDimensions(){return new float[]{squareWidth,squareHeight};}
-        @Override
-        public void showMessage(String message) {
-
-        }
         @Override
         public void draw(Batch batch, float parentAlpha) {
                 super.draw(batch, parentAlpha);

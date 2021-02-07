@@ -14,10 +14,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class cFinalView implements Screen
 {
-
     private Stage stage;
     private Game game;
-
     public cFinalView(Game agame, int score){
         game = agame;
         stage = new Stage(new ScreenViewport());
@@ -83,13 +81,10 @@ public class cFinalView implements Screen
         });
         //stage.addActor(optionsButton);
     }
-
-
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
-
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -97,27 +92,22 @@ public class cFinalView implements Screen
         stage.act();
         stage.draw();
     }
-
     @Override
     public void resize(int width, int height) {
 
     }
-
     @Override
     public void pause() {
 
     }
-
     @Override
     public void resume() {
 
     }
-
     @Override
     public void hide() {
 
     }
-
     @Override
     public void dispose() {
         stage.dispose();

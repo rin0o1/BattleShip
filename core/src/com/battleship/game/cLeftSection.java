@@ -92,6 +92,5 @@ public class cLeftSection extends Actor  {
         scoreValue.setText(String.valueOf(scoreValueDouble));
     }
 
-    public  int getScore(){return scoreValueDouble;}
 
 }

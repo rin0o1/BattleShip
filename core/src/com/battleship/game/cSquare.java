@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 
-public class cSquare extends cTableObject implements iSquare {
+public class cSquare extends cTableObject  {
 
     private Texture textureOnHover;
     private cTableObject object;
@@ -55,21 +55,8 @@ public class cSquare extends cTableObject implements iSquare {
     public void setIsAvailableForAction(boolean isAvailableForAction) {
         this.isAvailableForAction =isAvailableForAction;
     }
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-    }
-    @Override
-    public void setState() {
-
-    }
-    @Override
     public void placeObject(cTableObject object) {
         this.object=object;
-    }
-    @Override
-    public void removeCurrentObject() {
-
     }
     public void setTextureShot(){
         Texture t= new Texture(Gdx.files.internal("shotHit.PNG"));
@@ -79,11 +66,9 @@ public class cSquare extends cTableObject implements iSquare {
         Texture t = new Texture(Gdx.files.internal("shotMissed.PNG"));
         setTextureFromTexture(t);
     }
-    @Override
     public cTableObject isBusyAndObject() {
         return object;
     }
-    @Override
     public boolean isBusy() {
         return object!=null;
     }

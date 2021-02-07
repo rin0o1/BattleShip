@@ -10,7 +10,6 @@ class Explosion {
 
     private Animation<TextureRegion> explosionAnimation;
     private float explosionTimer;
-
     private Rectangle boundingBox;
     private float animationTime;
 
@@ -33,9 +32,7 @@ class Explosion {
         explosionAnimation = new Animation<TextureRegion>(animationTime/20, textureRegion1D);
         explosionTimer = 0;
     }
-
-    public void update(float deltaTime)
-    {
+    public void update(float deltaTime) {
         if(explosionTimer>1.5){
             explosionTimer=0;
 
@@ -46,15 +43,12 @@ class Explosion {
 
 
     }
-
-    public void draw (SpriteBatch batch)
-    {
+    public void draw (SpriteBatch batch) {
         batch.draw(explosionAnimation.getKeyFrame(explosionTimer),
                 boundingBox.x,
                 boundingBox.y,
                 boundingBox.width,
                 boundingBox.height);
     }
-
 
 }

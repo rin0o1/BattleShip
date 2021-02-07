@@ -17,19 +17,15 @@ import java.util.Arrays;
 public class cGameView implements Screen {
 
     private Stage stage;
-    private Game game;
 
     private cTableSection tableSection;
     private cRightSection rightSection;
     private cLeftSection leftSection;
-    private cFinalView finalView;
 
     private SpriteBatch batch;
 
-
     public cGameView(Game game) {
 
-        this.game = game;
         batch= new SpriteBatch();
 
         tableSection= new cTableSection(this);
@@ -57,7 +53,6 @@ public class cGameView implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
-
     @Override
     public void render(float delta)
     {
@@ -77,32 +72,19 @@ public class cGameView implements Screen {
         leftSection.updateScore(score, isToIncrement);
     }
 
-    public void updateShipList(cShip ship, boolean isSank)
-    {
-        rightSection.addShips(ship, isSank);
-    }
+    public void updateShipList(cShip ship, boolean isSank) { rightSection.addShips(ship, isSank); }
 
     @Override
     public void resize(int width, int height)
     {
         stage.getViewport().update(width, height);
     }
-
     @Override
-    public void pause() {
-
-    }
-
+    public void pause() { }
     @Override
-    public void resume() {
-
-    }
-
+    public void resume() { }
     @Override
-    public void hide() {
-
-    }
-
+    public void hide() { }
     @Override
     public void dispose() {
         stage.dispose();

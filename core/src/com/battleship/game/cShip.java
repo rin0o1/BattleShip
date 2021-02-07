@@ -22,8 +22,7 @@ public class cShip extends cTableObject {
             String name,
             int length,
             Image iconTexture
-    )
-    {
+    ) {
         super();
         this.iconTexture=iconTexture;
 
@@ -37,24 +36,11 @@ public class cShip extends cTableObject {
         this.shotReceived=0;
     }
 
-    public  cShip(Texture texture, int length){
-        super(texture);
-        setLength(length);
-    }
-    public  cShip(){}
-
     public boolean updateAndCheckState(){
         shotReceived++;
         this.isSunk = shotReceived==length;
         return isSunk;
     }
-
-    @Override
-    public void act(float delta)
-    {
-        super.act(delta);
-    }
-
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -70,8 +56,7 @@ public class cShip extends cTableObject {
             objectOrientation orientation,
             float squareHeight,
             ArrayList<cSquare> squares
-            )
-    {
+            ) {
         this.orientation= orientation;
         this.mySquare=squares;
         body= new Image(texture_);
@@ -82,14 +67,8 @@ public class cShip extends cTableObject {
         body.setHeight(squareHeight);
 
     }
+
     public  ArrayList<cSquare> getMySquare(){return  this.mySquare;}
-
     public int getLength(){return  this.length;}
-
-    public  void setLength(int length){
-        if(length<-1) {return;}
-        this.length=length;
-    }
-
     public Image getIconTexture(){return iconTexture;}
 }

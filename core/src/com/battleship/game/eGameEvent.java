@@ -1,6 +1,6 @@
 package com.battleship.game;
 
-public enum gameEvent {
+public enum eGameEvent {
     SHIPMISSED,
     SHIPHIT,
     SHIPSUNK

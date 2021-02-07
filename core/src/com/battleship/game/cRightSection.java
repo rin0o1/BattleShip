@@ -12,17 +12,13 @@ public class cRightSection extends Actor
 {
     private ArrayList<cShip> sunkShips;
     private ArrayList<cShip> unsunkShips;
-
     private TextButton sunkWritten;
     private TextButton unksunkWritten;
-
     private Stage stage;
     private float startX;
-
     private float lastFloatPositionY;
 
-    public  cRightSection (Stage stage, float startX)
-    {
+    public  cRightSection (Stage stage, float startX) {
         this.startX=startX;
         this.stage=stage;
         sunkShips = new ArrayList<>();
@@ -39,9 +35,7 @@ public class cRightSection extends Actor
         lastFloatPositionY=750;
 
     }
-
-    public void addShips( cShip s, boolean isSunk)
-    {
+    public void addShips( cShip s, boolean isSunk) {
         cShip ship= s;
 
         if(isSunk)
@@ -68,8 +62,4 @@ public class cRightSection extends Actor
 
     }
 
-    public  ArrayList<cShip> getList(int list)
-    {
-        return  null;
-    }
 }
