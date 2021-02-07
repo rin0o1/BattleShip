@@ -10,7 +10,7 @@ public class cRadar extends cWeapon
     private Texture radarDiscovered;
 
     public cRadar() {
-        super("radar_01.png");
+        super("radar_01.png", "a radar");
         radarDiscovered= new Texture(Gdx.files.internal("radarDiscovered.gif"));
     }
     public ArrayList<String> getSquareCoordinatesRequired() {
@@ -60,4 +60,3 @@ public class cRadar extends cWeapon
 
 }
 
-//radarDiscovered.gif

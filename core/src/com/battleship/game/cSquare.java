@@ -48,7 +48,7 @@ public class cSquare extends cTableObject implements iSquare {
     }
     public void squareTouchDown()
     {
-        setTextureFromTexture(textureOnHover, true);
+        setTextureFromTextureTemp(textureOnHover);
     }
     public int[] getCoordinates(){return tableCoordinates;}
     public boolean getIsAvailableForAction(){return this.isAvailableForAction;}
@@ -71,11 +71,11 @@ public class cSquare extends cTableObject implements iSquare {
     public void removeCurrentObject() {
 
     }
-    public void setTextureForShot(){
+    public void setTextureShot(){
         Texture t= new Texture(Gdx.files.internal("shotHit.PNG"));
         setTextureFromTexture(t);
     }
-    public void setTextureForMissed(){
+    public void setTextureMissed(){
         Texture t = new Texture(Gdx.files.internal("shotMissed.PNG"));
         setTextureFromTexture(t);
     }
@@ -93,3 +93,4 @@ public class cSquare extends cTableObject implements iSquare {
     }
 
 }
+

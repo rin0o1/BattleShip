@@ -1,8 +1,10 @@
 package com.battleship.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -10,32 +12,55 @@ import org.w3c.dom.Text;
 
 public class cLeftSection extends Actor  {
 
-    private TextButton quitButton;
     private TextButton score;
+    private TextButton quit;
     private TextButton scoreValue;
-    private double scoreValueDouble;
+    private int scoreValueDouble;
     private Stage stage;
+    private Game game;
 
-    public  cLeftSection(Stage stage)
+    public  cLeftSection(Stage stage, Game game)
     {
 
         this.setWidth(200);
         this.stage=stage;
-
+        this.game=game;
         float screenHeight=Gdx.graphics.getHeight();
         float screenWidth= Gdx.graphics.getWidth();
 
         scoreValueDouble=0;
-        score = new TextButton("QUIT",
+        quit = new TextButton("QUIT",
                 cBattleShip.gameSkin);
 
-        score.setBounds(10,100,100,70);
+        quit.setBounds(10,100,100,70);
 
-        quitButton = new TextButton("SCORE",
+        score = new TextButton("SCORE",
                 cBattleShip.gameSkin);
 
 
-        quitButton.setBounds(50,screenHeight-50,0,0);
+        score.setBounds(50,screenHeight-50,0,0);
+
+        quit.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event,
+                                 float x,
+                                 float y,
+                                 int pointer,
+                                 int button)
+            {
+
+                finalView();
+            }
+            @Override
+            public boolean touchDown (InputEvent event,
+                                      float x,
+                                      float y,
+                                      int pointer,
+                                      int button)
+            {
+                return true;
+            }
+        });
 
         scoreValue = new TextButton(String.valueOf(scoreValueDouble),
                 cBattleShip.gameSkin);
@@ -43,11 +68,16 @@ public class cLeftSection extends Actor  {
         scoreValue.setBounds(50,(screenHeight-50)-80,0,0);
 
 
-        this.stage.addActor(quitButton);
+        this.stage.addActor(quit);
         this.stage.addActor(score);
         this.stage.addActor(scoreValue);
 
 
+    }
+    public void finalView()
+    {
+        cFinalView finalView=new cFinalView(game, scoreValueDouble );
+        game.setScreen(finalView);
     }
 
     public void updateScore(double value, boolean isToIncrement)
@@ -61,5 +91,7 @@ public class cLeftSection extends Actor  {
 
         scoreValue.setText(String.valueOf(scoreValueDouble));
     }
+
+    public  int getScore(){return scoreValueDouble;}
 
 }

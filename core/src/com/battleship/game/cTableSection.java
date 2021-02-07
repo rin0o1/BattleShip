@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import java.io.File;
 import java.util.*;
 
-public class cTableSection extends Table implements iTableSection {
+public  class cTableSection extends Table implements iTableSection {
 
         //get those values from a setting file
         private final float squareHeight;
@@ -63,6 +63,7 @@ public class cTableSection extends Table implements iTableSection {
                 float startWidth=Gdx.graphics.getWidth();
 
                 weaponHandler.createWeaponList(startWidth, startHeight);
+                cMessageOutput m= new cMessageOutput(this, startWidth, startHeight);
 
                 for(int h=0; h<columsNum; h++)
                 {
@@ -133,7 +134,8 @@ public class cTableSection extends Table implements iTableSection {
         @Override
         public void displayShips() {
 
-                System.out.println("Displaying ships...");
+
+                cMessageOutput.showMessage("Displaying ships...");
                 ArrayList<String> names= cHelper.getFilesFromFolderPath(
                         shipsTexturesPath
                 );
@@ -195,7 +197,6 @@ public class cTableSection extends Table implements iTableSection {
                                         {
                                                 square.placeObject(ship);
                                         }
-
                                         isDropped = true;
                                 }
                         }
@@ -204,7 +205,7 @@ public class cTableSection extends Table implements iTableSection {
 
                         //stage.addActor(ship);
                         tableObjects.add(ship);
-                        System.out.println("Ships displayed");
+                        cMessageOutput.showMessage("Ships displayed");
                 }
         }
         private int [] getPositionAndOrientationFromShipLength(int shipLength) {

@@ -22,13 +22,14 @@ public class cGameView implements Screen {
     private cTableSection tableSection;
     private cRightSection rightSection;
     private cLeftSection leftSection;
-
+    private cFinalView finalView;
 
     private SpriteBatch batch;
 
 
     public cGameView(Game game) {
 
+        this.game = game;
         batch= new SpriteBatch();
 
         tableSection= new cTableSection(this);
@@ -36,7 +37,7 @@ public class cGameView implements Screen {
         stage = new Stage( new ScreenViewport());
         stage.addActor(tableSection);
 
-        leftSection= new cLeftSection(stage);
+        leftSection= new cLeftSection(stage,game);
 
         rightSection= new cRightSection(stage,
                 (50*10)+leftSection.getWidth()+110);
@@ -48,7 +49,7 @@ public class cGameView implements Screen {
         float positionX= tableSection.getX();
 
         stage.addActor(rightSection);
-        this.game = game;
+
     }
 
     @Override

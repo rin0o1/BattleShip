@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Null;
 
 import java.util.ArrayList;
 
@@ -55,7 +54,7 @@ public class cTableObject extends Actor {
         body.setDrawable(new TextureRegionDrawable(texture));
     }
 
-    public void setTextureFromTexture(Texture texture, boolean isClicked)
+    public void setTextureFromTextureTemp(Texture texture)
     {
         body.setDrawable(new TextureRegionDrawable(texture));
     }

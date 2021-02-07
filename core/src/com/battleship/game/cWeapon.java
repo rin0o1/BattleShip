@@ -1,15 +1,15 @@
 package com.battleship.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import java.util.ArrayList;
 
-public abstract class cWeapon extends  cTableObject
+public class cWeapon extends  cTableObject
 {
     protected cSquare squareLocation;
 
-    public cWeapon(String internalTexture)
+    public cWeapon(String internalTexture, String name)
     {
         super();
+        setName(name);
         init(internalTexture);
     }
 

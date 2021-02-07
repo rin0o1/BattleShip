@@ -1,8 +1,5 @@
 package com.battleship.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-
 import java.util.ArrayList;
 
 public class cShot extends cWeapon
@@ -10,7 +7,7 @@ public class cShot extends cWeapon
 
     public cShot()
     {
-        super("WeaponBattleshipStandardGun.png");
+        super("WeaponBattleshipStandardGun.png", "to shot");
     }
     public ArrayList<Object> actionWithObject(){
 
@@ -28,18 +25,18 @@ public class cShot extends cWeapon
             boolean isSunk= s.updateAndCheckState();
             if(isSunk)
             {
-                squareLocation.setTextureForShot();
+                squareLocation.setTextureShot();
                 eventOfShot=gameEvent.SHIPSUNK;
             }
             else {
                 eventOfShot=gameEvent.SHIPHIT;
-                squareLocation.setTextureForShot();
+                squareLocation.setTextureShot();
             }
         }
         else
         {
             eventOfShot=gameEvent.SHIPMISSED;
-            squareLocation.setTextureForMissed();
+            squareLocation.setTextureMissed();
             //set new texture
         }
 

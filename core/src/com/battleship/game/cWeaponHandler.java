@@ -49,14 +49,14 @@ public class cWeaponHandler
         switch (event)
         {
             case SHIPHIT:
-                System.out.println("My ship hit");
+                cMessageOutput.showMessage("You hit my ship!");
                 point=1;
                 break;
             case SHIPSUNK:
                 cShip ship= (cShip) res.get(1);
                 int shipLength= ship.getLength();
                 point= shipLength*2;
-                System.out.println("Ship sunk");
+                cMessageOutput.showMessage("You sunk my ship!");
                 section.getStage().addActor(ship);
                 ArrayList<cSquare> squares=ship.getMySquare();
                 for (cSquare s: squares)
@@ -68,7 +68,7 @@ public class cWeaponHandler
                 break;
             case SHIPMISSED:
                 point=1;
-                System.out.println("Ship missed");
+                cMessageOutput.showMessage("Ship missed!");
                 break;
         }
 
@@ -92,7 +92,7 @@ public class cWeaponHandler
         int [] coordinates= square.getCoordinates();
         int square_X= coordinates[0];
         int square_Y= coordinates[1];
-        if(!isRadarAvailable()){System.out.println("You used all radars available"); return ;}
+        if(!isRadarAvailable()){cMessageOutput.showMessage("You have not enough radars"); return ;}
 
         boolean canBePlaced=
                 square_X>0 &&
@@ -100,7 +100,7 @@ public class cWeaponHandler
                         square_Y> 0 &&
                         square_Y< section.getRowsNum()-1;
 
-        if(!canBePlaced){System.out.println("The radar cannot be placed here"); return ;}
+        if(!canBePlaced){cMessageOutput.showMessage("I am sorry, the radar cannot be placed here"); return ;}
 
         cRadar r=new cRadar();
         r.setSquareLocation(square);
@@ -125,12 +125,13 @@ public class cWeaponHandler
 
         r.action(squares);
         radarCount-=1;
-        System.out.println("Radar available "+ radarCount);
+        cMessageOutput.showMessage("Radar available " + radarCount);
+
         weaponSelected=null;
 
     }
     public void weaponHandler(cSquare square){
-        if(weaponSelected==null){ System.out.println("Please choose a weapon"); return;}
+        if(weaponSelected==null){ cMessageOutput.showMessage("Please select a weapon before"); return;}
 
         boolean isShot= weaponSelected instanceof cShot
                 && square.getIsAvailableForAction();
@@ -146,7 +147,8 @@ public class cWeaponHandler
     public void onWeaponSelected(cWeapon weapon) {
         //if is available
         weaponSelected =weapon;
-        System.out.println("Weapon selected");
+        cMessageOutput.showMessage("You select " + weapon.getName());
+
     }
     public void renderAnimations(SpriteBatch batch, float deltaTime) {
         ListIterator<Explosion> explosionListIterator = explosionList.listIterator();
