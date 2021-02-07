@@ -39,3 +39,7 @@ public class cBattleShip extends Game {
 	}
 }
 
+//radar_01
+
+//WeaponBattleshipStandardGun.png
+
